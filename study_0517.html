@@ -7,12 +7,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        /* Base typography and scrollbar */
         body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
 
+        /* Mandatory Chart Container Styling */
         .chart-container {
             position: relative;
             width: 100%;
@@ -26,6 +28,7 @@
             .chart-container { height: 320px; }
         }
 
+        /* Animations & Interactive Elements */
         .fade-enter { animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -53,20 +56,21 @@
 </head>
 <body class="bg-stone-50 text-stone-800 antialiased selection:bg-stone-200">
 
-    <!-- Chosen Palette: Warm Neutrals (Stone) as base, dynamic corporate accents -->
-    <!-- Application Structure Plan: Dashboard with top-level tabs. Added specific sections for Stock Info and 1Q26 specific insights pulled directly from the provided PDFs to enhance actionability for investors. -->
-    <!-- Visualization & Content Choices: 
-         1. Stock Info Badge: Quick HTML/CSS styling to show current price vs target price.
-         2. Financials & 1Q26 Review: Combined chart with a specific text block for the 1Q26 analyst preview.
-         3. Competitiveness/Timeline: Integrated "Physical AI", "Genesis HEV", "Machine Tool division sale" into existing structures.
-         NO SVG / NO Mermaid used. -->
+    <!-- Chosen Palette: Warm Neutrals (Stone) as base, dynamic corporate accents (Blue, Orange, Teal) -->
+    <!-- Application Structure Plan: Tab-based SPA Dashboard.
+         1. Header Widget: Displays stock price, target price, and rating.
+         2. Financials: Chart.js visualization paired with a 1Q26 PDF-derived Alert Box and utilization bars.
+         3. Value Chain: 2-column Grid showing the generic checklist (Left) and the current 2026 status evaluation based on that checklist (Right).
+         4. Competitiveness & Timeline: Highlight core future drivers like 'Physical AI' and 'Machine Tool Sale'.
+         5. Strategy: Concluding investment outlook. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. All graphics are handled via HTML/Tailwind styling, Chart.js Canvas, and Unicode characters. -->
 
     <header class="bg-white border-b border-stone-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center py-4">
                 <div class="mb-4 md:mb-0 text-center md:text-left">
                     <h1 class="text-2xl font-bold text-stone-900 tracking-tight">K-Auto/EV 투자 대시보드</h1>
-                    <p class="text-sm text-stone-500 mt-1">최근 업데이트: 2026년 4월 | 증권사 리포트 반영</p>
+                    <p class="text-sm text-stone-500 mt-1">최근 업데이트: 2026년 4월 | 증권사 리포트 & 현황 점검 반영</p>
                 </div>
                 <nav class="flex space-x-2 bg-stone-100 p-1 rounded-lg" id="nav-tabs">
                     <button data-target="hyundai" class="tab-btn px-4 py-2 text-sm font-medium rounded-md transition-all text-blue-700 bg-white shadow-sm border-b-2 border-blue-600">현대자동차</button>
@@ -78,15 +82,15 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" id="app-container">
-        <!-- Content injected here -->
+        <!-- Content injected by JavaScript will appear here -->
     </main>
 
     <footer class="bg-stone-900 text-stone-400 py-6 text-center text-xs mt-8">
-        <p>© 2026 K-Investment Analytics. Data synthesized from 2026 Q2 Research Reports.</p>
+        <p>© 2026 K-Investment Analytics. Data synthesized from 2026 Q2 Research Reports. (Simulated Data)</p>
     </footer>
 
     <script>
-        // 1. Database (Updated with PDF Insights)
+        // 1. Database (Complete integration of PDF insights + Value Chain Status)
         const db = {
             hyundai: {
                 id: 'hyundai',
@@ -117,6 +121,12 @@
                         '글로벌 시장점유율(M/S) 및 권역별 판매 믹스 (고수익 HEV/EV 비율)',
                         '글로벌 재고 월수(Inventory Days) 및 인센티브(판매장려금) 트렌드',
                         '차세대 플랫폼(eM) 기반 SDV 구독 서비스 매출 가시화 여부'
+                    ],
+                    statusTitle: '단기 실적 숨고르기 속, 하반기 믹스 개선(HEV) 대기',
+                    statusDetails: [
+                        { title: '권역별 판매 믹스', desc: 'EV 캐즘 속 글로벌 하이브리드(HEV) 2위 입지로 수익성을 방어 중이나, 1Q26 미국/인도 외 지역 판매 다소 둔화. 하반기 투싼, 아반떼 및 <b>제네시스 HEV</b> 출시로 강력한 믹스 개선 모멘텀 대기.' },
+                        { title: '재고 및 인센티브 트렌드', desc: '판매보증 충당금 증가 반영으로 단기적인 1Q26 영업이익은 시장 컨센서스를 하회할 전망이며, 환율(원화 약세) 수혜도 과거 대비 제한적인 상황.' },
+                        { title: 'SDV/플랫폼 가시화', desc: '단순한 소프트웨어를 넘어 2026년을 기점으로 하드웨어와 AI가 결합하는 <b>Physical AI</b> 시대를 주도하기 위한 모빌리티 테크 기업으로의 밸류에이션 리레이팅 시동 중.' }
                     ]
                 },
                 competitiveness: [
@@ -126,8 +136,8 @@
                 ],
                 timeline: [
                     { date: '2025 하반기', text: '유럽 내 중국산 EV 관세 인상에 따른 반사이익 도모. 체코 공장 중심 현지 맞춤형 소형 모델 투입.' },
-                    { date: '2026 1분기', text: '일시적인 보증충당금 반영 및 글로벌 일부 권역 판매 둔화로 실적 숨고르기.' },
-                    { date: '2026 하반기', text: '제네시스 HEV 및 신형 볼륨 모델 글로벌 런칭. Physical AI 시대 모빌리티 테크 기업으로의 밸류에이션 리레이팅 시동.' }
+                    { date: '2026 1분기', text: '일시적인 보증충당금 반영 및 글로벌 일부 권역 판매 둔화로 단기 실적 숨고르기.' },
+                    { date: '2026 하반기', text: '제네시스 HEV 및 신형 볼륨 모델 글로벌 런칭. Physical AI 시대 모빌리티 테크 기업으로의 재평가(Re-rating) 본격화.' }
                 ],
                 strategy: {
                     outlook: '2H26 재개될 볼륨 성장, Top-pick 유지',
@@ -143,7 +153,7 @@
                 name: '포스코퓨처엠',
                 ticker: '003670.KS',
                 theme: 'orange',
-                summary: '국내 유일 양/음극재 동시 생산 기업. 단기 EPS 하향에도 불구, 포스코 그룹 밸류체인의 프리미엄은 굳건합니다.',
+                summary: '국내 유일 양/음극재 동시 생산 기업. 광물가 래깅으로 인한 단기 EPS 하향에도 불구, 그룹사 풀 밸류체인의 프리미엄은 굳건합니다.',
                 stock: { price: '218,000원', target: '271,000원', rating: 'BUY', upside: '+24.3%' },
                 financials: {
                     labels: ['2023', '2024', '2025', '2026.1Q(연환산)'],
@@ -151,7 +161,7 @@
                     profit: [0.03, 0.15, 0.45, 0.55],
                     q1Review: {
                         title: '1Q26 Update: 실적 눈높이 조정',
-                        text: '광물 가격의 래깅 효과 및 전방 수요 회복 속도를 반영하여 <b>2026E EPS 추정치가 소폭(-9.1%) 하향 조정</b>되었습니다.',
+                        text: '광물 가격의 래깅 효과 및 전방 수요 회복 속도를 반영하여 <b>2026E EPS 추정치가 전분기 대비 소폭(-9.1%) 하향 조정</b>되었습니다.',
                         color: 'orange'
                     },
                     productionText: '양극재 확보 캐파: 약 39만톤 (25년말 기준)',
@@ -167,6 +177,12 @@
                         '리튬/니켈 등 메탈 가격 트렌드 및 판가 연동 래깅(Lagging) 마진 변화',
                         '전방 고객사(LG엔솔, 포드, GM 등)의 실 생산량 및 소재 주문(Call-off) 추이',
                         '탈중국(IRA FEOC) 규제 충족을 위한 그룹사 원료 소싱 내재화 비율 상승 속도'
+                    ],
+                    statusTitle: '메탈가 연동으로 실적 눈높이 조정 중이나, 펀더멘털은 확고',
+                    statusDetails: [
+                        { title: '메탈 가격 및 래깅 마진', desc: '리튬 등 주요 광물 가격 변동 및 전방 수요 회복 지연에 따른 래깅 효과로 수익성이 다소 압박받고 있음. 이에 따라 증권가 연간 EPS 추정치 하향 발생.' },
+                        { title: '고객사 주문(Call-off) 추이', desc: '완성차 업체들의 전기차 전환 속도 조절(캐즘 장기화)로 인해 단기적인 양/음극재 주문량 증가가 시장 기대보다 더딘 상황 (양극재 가동률 약 82%).' },
+                        { title: '원료 소싱 내재화 비율', desc: '포스코홀딩스를 통한 아르헨티나 염호, 인니 니켈 등 자체 조달망이 26년부터 본격 가동. 단기 부진에도 불구하고 향후 마진 스프레드를 크게 넓힐 수 있는 강력한 무기.' }
                     ]
                 },
                 competitiveness: [
@@ -176,15 +192,15 @@
                 ],
                 timeline: [
                     { date: '2024-2025', text: '미국 IRA FEOC 규정 확정에 따른 중국 JV 지분율 조정 및 캐나다 양극재 공장(얼티엄캠) 본가동 시작.' },
-                    { date: '2026 1분기', text: '전방 산업 수요 회복 속도에 맞춰 26년 연간 EPS 실적 눈높이 소폭 현실화.' },
-                    { date: '2026 하반기', text: '유럽 CRMA 발효 연계, 폴란드 내 리사이클링-전구체-양극재 클러스터 구축 본격화.' }
+                    { date: '2026 1분기', text: '전방 산업 수요 회복 속도 둔화에 맞춰 26년 연간 EPS 실적 눈높이 현실화 (추정치 하향).' },
+                    { date: '2026 하반기', text: '유럽 CRMA 발효 연계, 폴란드 내 배터리 리사이클링-전구체-양극재 클러스터 구축 본격화.' }
                 ],
                 strategy: {
                     outlook: '소재단 최선호주 - 원료 내재화 프리미엄',
                     points: [
-                        '투자 포인트: 배터리 소재 중 가장 안정적인 원료 조달 능력. 26년부터 리튬 자급률 상승에 따른 마진 스프레드 확대 본격화.',
-                        '리스크: EV 수요 회복 장기 지연 시 목표가 추가 하향 리스크 잔존.',
-                        '액션: 단기 실적 조정에도 불구하고 그룹사 시너지를 바탕으로 한 펀더멘털은 가장 견고. 장기 코어 자산 관점 유지.'
+                        '투자 포인트: 배터리 소재 중 가장 안정적인 원료 조달 능력. 26년부터 리튬 자급률 상승에 따른 마진 스프레드 확대 본격화 예상.',
+                        '리스크: EV 수요 회복 장기 지연 시 목표가 추가 하향 리스크 잔존 및 단기 재고평가손실 가능성.',
+                        '액션: 단기 실적 조정에도 불구하고 그룹사 시너지를 바탕으로 한 펀더멘털은 가장 견고. 긴 호흡의 코어 자산 관점 유지.'
                     ]
                 }
             },
@@ -193,7 +209,7 @@
                 name: '현대위아',
                 ticker: '011210.KS',
                 theme: 'teal',
-                summary: '내연기관 엔진 회사에서 하이브리드, 열관리, 로봇으로 사업 포트폴리오 전환 완료. 두 번째 전성기 개막.',
+                summary: '전통 내연기관 엔진 회사에서 하이브리드 부품, 열관리, 로봇으로 사업 포트폴리오 전환 완료. 두 번째 전성기가 개막했습니다.',
                 stock: { price: '91,000원', target: 'N/A', rating: 'Not Rated', upside: '커버리지 전환기' },
                 financials: {
                     labels: ['2023', '2024', '2025', '2026.1Q(연환산)'],
@@ -201,7 +217,7 @@
                     profit: [0.22, 0.25, 0.35, 0.45],
                     q1Review: {
                         title: '사업 구조조정 완료',
-                        text: '<b>2025년 7월 공작기계 사업 매각</b>으로 만성 적자 사업을 완전히 정리했습니다. 이익 체력이 퀀텀 점프하는 구간에 진입했습니다.',
+                        text: '<b>2025년 7월 공작기계 사업 매각</b>으로 만성 적자 사업을 완전히 정리했습니다. 기업 전체의 이익 체력이 퀀텀 점프하는 구간에 진입했습니다.',
                         color: 'teal'
                     },
                     productionText: '매출 비중: 차량부품 75% / 기계·방산 25%',
@@ -217,24 +233,30 @@
                         '멕시코 공장의 북미향 주요 부품 가동률 향상 속도',
                         '차세대 전기차 플랫폼향 통합 열관리 시스템 추가 수주 여부',
                         '스마트팩토리용 물류/제조 로봇의 데이터센터 등 타 산업 확장성'
+                    ],
+                    statusTitle: '아픈 손가락(공작기계) 매각 완료, 두 번째 전성기 개막',
+                    statusDetails: [
+                        { title: '멕시코 공장 가동률', desc: '북미향 핵심 부품을 생산하는 멕시코 공장의 가동률(약 85%) 회복이 단기 실적 모멘텀을 강하게 견인 중. 특히 25년 7월 만성 적자였던 공작기계 사업 매각으로 전사 이익률 퀀텀 점프 달성.' },
+                        { title: '통합 열관리 시스템(ITMS)', desc: '단순 내연기관 부품사에서 벗어나 2026년 신차부터 적용되는 통합 열관리 시스템 개발 완료. 한온시스템 등 기존 열관리 전문 플레이어들과 본격적인 수주 경쟁 개시.' },
+                        { title: '로봇의 타 산업 확장성', desc: '공작기계 매각 대금과 방산 호실적을 바탕으로 로보틱스 및 Physical AI에 자본 집중. 자동차 팩토리를 넘어 물류 및 <b>데이터센터 열관리 분야</b>로 확장 가시화 시 딥테크 멀티플 재평가(Re-rating) 기대.' }
                     ]
                 },
                 competitiveness: [
                     { icon: '🌡️', title: '통합 열관리 및 하이브리드', desc: '단순 내연기관을 넘어 하이브리드 엔진 부품 선점 및 2026년 신차 적용 통합 열관리 시스템(ITMS) 개발 완료.' },
-                    { icon: '🤖', title: '로봇/데이터센터 확장', desc: '공작기계를 버리고 로봇을 취함. 자동차 팩토리를 넘어 물류 로봇과 데이터센터 열관리 분야로의 추가 업사이드 잠재력.' },
-                    { icon: '🛡️', title: 'Physical AI 자본 집중', desc: '적자 사업 매각 대금과 방산 호실적 현금을 2026~2028년 Physical AI 시대 성장을 위한 전략적 투자에 집중 투입.' }
+                    { icon: '🤖', title: '로봇/데이터센터 확장', desc: '공작기계를 버리고 로봇을 취함. 자동차 팩토리를 넘어 물류 로봇과 데이터센터 열관리 분야로의 추가 업사이드 잠재력 확보.' },
+                    { icon: '🛡️', title: 'Physical AI 자본 집중', desc: '적자 사업 매각 대금과 방산 호실적 현금을 2026~2028년 Physical AI 시대 성장을 위한 전략적 R&D 및 M&A에 집중 투입.' }
                 ],
                 timeline: [
-                    { date: '2024-2025', text: '방산 부문 역대 최대 수주잔고 달성 및 25년 7월 공작기계 사업부 매각 완료.' },
-                    { date: '2026 상반기', text: '멕시코 공장 가동률 상승을 통한 이익 기여. 차세대 열관리 모듈 양산 본격화.' },
-                    { date: '2026-2028', text: '두 번째 전성기 개막. 자본 배분(Capital Allocation)을 Physical AI와 로보틱스에 집중하는 대규모 투자 구간.' }
+                    { date: '2024-2025', text: '방산 부문 역대 최대 수주잔고 달성 및 2025년 7월 아픈 손가락이었던 공작기계 사업부 매각 완료.' },
+                    { date: '2026 상반기', text: '멕시코 공장 가동률 상승을 통한 이익 기여도 대폭 향상. 차세대 열관리 모듈 양산 본격화.' },
+                    { date: '2026-2028', text: '두 번째 전성기 개막. 자본 배분(Capital Allocation)을 Physical AI와 로보틱스에 집중하는 대규모 투자 구간 진입.' }
                 ],
                 strategy: {
                     outlook: '두 번째 전성기 개막 - 딥테크 밸류에이션',
                     points: [
-                        '투자 포인트: 공작기계 매각으로 실적 발목을 잡던 요인 제거. 멕시코 공장 가동률 회복이 단기 실적 모멘텀 견인.',
-                        '추가 업사이드: 차세대 EV 플랫폼 열관리 수주 및 로봇의 타 산업(데이터센터 등) 공급 가시화 시.',
-                        '액션: 기존 내연기관 부품사 멀티플(저PBR)에서 로봇/열관리/방산 딥테크 기업으로 시장의 평가(Rating)가 완전히 달라지는 원년.'
+                        '투자 포인트: 공작기계 매각으로 실적 발목을 잡던 요인 완전 제거. 멕시코 공장 가동률 회복이 단기 실적 모멘텀을 강하게 견인.',
+                        '추가 업사이드: 차세대 EV 플랫폼향 열관리 부품 수주 및 로봇의 타 산업(데이터센터 등) 공급 가시화 시 큰 폭의 주가 상승 여력.',
+                        '액션: 기존 내연기관 부품사라는 꼬리표(저PBR)를 떼고 로봇/열관리/방산이 결합된 딥테크 기업으로 시장의 평가(Rating)가 완전히 달라지는 원년.'
                     ]
                 }
             }
@@ -249,29 +271,31 @@
 
         function renderSectionIntro(title, desc) {
             return `
-                <div class="mb-4 border-b border-stone-100 pb-2">
+                <div class="mb-4 border-b border-stone-100 pb-3">
                     <h2 class="text-xl font-bold text-stone-800 mb-1">${title}</h2>
                     <p class="text-sm text-stone-500">${desc}</p>
                 </div>
             `;
         }
 
+        // 1. Header with Stock Widget
         function buildHeader(data) {
             return `
-                <div class="mb-6 bg-white p-6 rounded-xl border border-stone-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div>
+                <div class="mb-6 bg-white p-6 rounded-xl border border-stone-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                    <div class="flex-grow">
                         <div class="flex items-baseline gap-3 mb-2">
                             <h2 class="text-3xl font-extrabold text-stone-900">${data.name}</h2>
                             <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-stone-200 text-stone-700">${data.ticker}</span>
                         </div>
                         <p class="text-md text-stone-600 max-w-3xl leading-relaxed">${data.summary}</p>
                     </div>
-                    <div class="bg-stone-50 p-4 rounded-lg border border-stone-200 min-w-[200px] text-center shadow-inner">
-                        <div class="text-xs font-bold text-stone-500 mb-1 uppercase tracking-widest">Investment Rating</div>
-                        <div class="text-xl font-black text-${data.theme}-600 mb-2">${data.stock.rating}</div>
-                        <div class="grid grid-cols-2 gap-2 text-sm">
+                    <!-- Stock Widget -->
+                    <div class="bg-stone-50 p-4 rounded-lg border border-stone-200 min-w-[220px] w-full md:w-auto text-center shadow-inner shrink-0">
+                        <div class="text-[10px] font-bold text-stone-400 mb-1.5 uppercase tracking-widest">Investment Rating</div>
+                        <div class="text-2xl font-black text-${data.theme}-600 mb-3 tracking-tight">${data.stock.rating}</div>
+                        <div class="grid grid-cols-2 gap-y-2 gap-x-4 text-sm items-center">
                             <div class="text-right text-stone-500">현재가</div>
-                            <div class="text-left font-bold">${data.stock.price}</div>
+                            <div class="text-left font-bold text-stone-800">${data.stock.price}</div>
                             <div class="text-right text-stone-500">목표가</div>
                             <div class="text-left font-bold text-${data.theme}-700">${data.stock.target}</div>
                         </div>
@@ -280,6 +304,7 @@
             `;
         }
 
+        // 2. Financials & PDF 1Q26 Insights
         function buildFinancials(data) {
             const bars = data.financials.utilization.map(item => `
                 <div class="mb-2.5">
@@ -295,7 +320,7 @@
 
             return `
                 <section class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 mb-6">
-                    ${renderSectionIntro('1. 재무 지표 및 2026.1Q Update', '과거 매출/이익 트렌드와 함께 최신 증권사 리포트에서 지적한 단기 실적 관전 포인트를 확인합니다.')}
+                    ${renderSectionIntro('1. 재무 지표 및 2026.1Q Update', '과거 매출/이익 트렌드와 함께 최신 증권사 리포트에서 발췌한 단기 실적 관전 포인트를 확인합니다.')}
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
                         <div class="lg:col-span-2">
                             <div class="chart-container">
@@ -305,16 +330,16 @@
                         <div class="flex flex-col gap-4">
                             <!-- 1Q Review Alert Box -->
                             <div class="bg-${data.theme}-50 border-l-4 border-${data.theme}-500 p-4 rounded-r-lg">
-                                <h4 class="font-bold text-${data.theme}-800 text-sm mb-1 flex items-center gap-1">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <h4 class="font-bold text-${data.theme}-800 text-sm mb-1.5 flex items-center gap-1.5">
+                                    <span class="text-base">📢</span>
                                     ${data.financials.q1Review.title}
                                 </h4>
                                 <p class="text-xs text-stone-700 leading-relaxed">${data.financials.q1Review.text}</p>
                             </div>
                             
                             <!-- Utilization Box -->
-                            <div class="bg-stone-50 p-4 rounded-lg border border-stone-100">
-                                <h3 class="text-sm font-bold text-stone-800 mb-2">🏭 가동률 점검</h3>
+                            <div class="bg-stone-50 p-4 rounded-lg border border-stone-100 shadow-sm">
+                                <h3 class="text-sm font-bold text-stone-800 mb-2">🏭 핵심 공장 가동률 점검</h3>
                                 <p class="text-[11px] text-stone-500 mb-3 pb-2 border-b border-stone-200">${data.financials.productionText}</p>
                                 ${bars}
                             </div>
@@ -324,6 +349,7 @@
             `;
         }
 
+        // 3. Value Chain with 2-Column Evaluation
         function buildValueChain(data) {
             const positions = [
                 { id: 0, title: 'Upstream', desc: '광물/제련' },
@@ -344,70 +370,106 @@
             }).join('<div class="hidden md:flex text-stone-300 px-1 text-sm">▶</div>');
 
             const checks = data.valueChain.checklist.map(item => `<li class="flex items-start text-xs text-stone-700 mb-1.5"><span class="text-${data.theme}-500 mr-2 text-[10px] mt-0.5">■</span><span>${item}</span></li>`).join('');
+            
+            const statusDetailsHTML = data.valueChain.statusDetails.map(item => `
+                <div class="mb-3.5 last:mb-0">
+                    <h5 class="text-xs font-bold text-stone-800 flex items-start gap-1.5 mb-1">
+                        <span class="text-${data.theme}-500 mt-0.5">☑️</span> 
+                        ${item.title}
+                    </h5>
+                    <p class="text-[11.5px] text-stone-600 pl-5 leading-relaxed">${item.desc}</p>
+                </div>
+            `).join('');
 
             return `
                 <section class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 mb-6">
-                    ${renderSectionIntro('2. 밸류체인 입지 & 투자 체크리스트', '해당 기업의 산업 내 위치 및 2026년 기준 핵심 모니터링 지표입니다.')}
-                    <div class="flex flex-col md:flex-row items-center justify-between mb-5 gap-2 md:gap-0">${nodes}</div>
-                    <div class="bg-stone-50 rounded-lg p-4 border border-stone-200">
-                        <ul class="pl-1">${checks}</ul>
+                    ${renderSectionIntro('2. 밸류체인 입지 & 핵심 지표 현황 진단', '해당 기업의 산업 내 위치를 파악하고, 투자 시 반드시 확인해야 할 체크리스트를 바탕으로 2026년 5월 현재의 상황을 진단합니다.')}
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+                        <!-- Left: Diagram & Checklist -->
+                        <div class="flex flex-col gap-4">
+                            <div class="flex flex-col md:flex-row items-center justify-between mb-2 gap-2 md:gap-0">${nodes}</div>
+                            <div class="bg-stone-50 rounded-lg p-4 border border-stone-200 h-full">
+                                <h4 class="font-bold text-stone-800 mb-3 text-sm flex items-center gap-1.5">
+                                    <span class="text-base">📋</span> 핵심 점검 체크리스트
+                                </h4>
+                                <ul class="pl-1">${checks}</ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Right: Current Status Evaluation -->
+                        <div class="bg-${data.theme}-50 rounded-lg p-5 border border-${data.theme}-200 shadow-inner h-full flex flex-col">
+                            <h4 class="font-bold text-${data.theme}-800 mb-2.5 text-sm flex items-center gap-2">
+                                <span class="text-lg">🔍</span> 현황 요약: ${data.valueChain.statusTitle}
+                            </h4>
+                            <div class="border-b border-${data.theme}-200/60 mb-4"></div>
+                            <div class="flex-grow flex flex-col justify-center">
+                                ${statusDetailsHTML}
+                            </div>
+                        </div>
                     </div>
                 </section>
             `;
         }
 
+        // 4. Competitiveness Grid
         function buildCompetitiveness(data) {
             const cards = data.competitiveness.map(comp => `
-                <div class="bg-white p-4 rounded-lg border border-stone-200 hover:border-${data.theme}-400 transition-colors shadow-sm">
-                    <div class="text-xl mb-2">${comp.icon}</div>
-                    <h4 class="font-bold text-stone-800 text-sm mb-1.5">${comp.title}</h4>
+                <div class="bg-white p-4.5 rounded-lg border border-stone-200 hover:border-${data.theme}-400 transition-colors shadow-sm h-full">
+                    <div class="text-2xl mb-2.5">${comp.icon}</div>
+                    <h4 class="font-bold text-stone-800 text-sm mb-2">${comp.title}</h4>
                     <p class="text-xs text-stone-600 leading-relaxed">${comp.desc}</p>
                 </div>
             `).join('');
 
             return `
                 <section class="bg-stone-50 rounded-xl p-6 mb-6 border border-stone-200">
-                    ${renderSectionIntro('3. 중장기 핵심 모멘텀', '단기 실적을 넘어 밸류에이션 확장을 이끌어낼 구조적 성장 동력입니다.')}
+                    ${renderSectionIntro('3. 중장기 핵심 모멘텀', '단기 실적을 넘어 기업의 밸류에이션 리레이팅(재평가)을 이끌어낼 구조적 성장 동력과 차별화 기술입니다.')}
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">${cards}</div>
                 </section>
             `;
         }
 
+        // 5. Timeline
         function buildTimeline(data) {
             const items = data.timeline.map(t => `
                 <div class="timeline-item relative pl-5 pb-5 border-l-2 border-stone-300 text-${data.theme}-600 last:pb-0 last:border-transparent">
                     <div class="font-bold text-xs mb-1">${t.date}</div>
-                    <div class="text-xs text-stone-700 bg-white p-2.5 rounded border border-stone-100">${t.text}</div>
+                    <div class="text-xs text-stone-700 bg-white p-3 rounded border border-stone-100 shadow-sm">${t.text}</div>
                 </div>
             `).join('');
 
             return `
                 <section class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 mb-6">
-                    ${renderSectionIntro('4. 주요 이슈 타임라인', '최근 주요 경영 이벤트 및 외부 환경 변화에 대한 대응 흐름입니다.')}
-                    <div class="ml-2 mt-4">${items}</div>
+                    ${renderSectionIntro('4. 주요 이슈 타임라인', '최근 주요 경영 이벤트 및 외부 규제/환경 변화에 대한 기업의 전략적 대응 흐름입니다.')}
+                    <div class="ml-2 mt-5">${items}</div>
                 </section>
             `;
         }
 
+        // 6. Final Strategy
         function buildStrategy(data) {
             const points = data.strategy.points.map(p => `
-                <li class="mb-2 pl-4 relative text-sm leading-relaxed text-stone-300">
+                <li class="mb-2.5 pl-4 relative text-sm leading-relaxed text-stone-300">
                     <span class="absolute left-0 top-1.5 w-1.5 h-1.5 rounded-full bg-${data.theme}-400"></span>
-                    ${p.replace(/투자 포인트:|리스크:|액션:/g, match => `<strong class="text-white">${match}</strong>`)}
+                    ${p.replace(/투자 포인트:|리스크:|액션:|추가 업사이드:/g, match => `<strong class="text-white">${match}</strong>`)}
                 </li>
             `).join('');
 
             return `
                 <section class="bg-stone-900 rounded-xl shadow-lg p-6 mb-6 border-t-4 border-${data.theme}-500">
-                    <h2 class="text-lg font-bold text-white mb-4 flex items-center gap-2"><span class="text-xl">💡</span> 5. 2026 투자 전략 총평</h2>
-                    <div class="bg-stone-800 rounded-lg p-4 mb-4 text-center border border-stone-700">
+                    <h2 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                        <span class="text-xl">💡</span> 5. 2026 투자 전략 총평
+                    </h2>
+                    <div class="bg-stone-800 rounded-lg p-4 mb-5 text-center border border-stone-700">
                         <strong class="text-lg md:text-xl text-${data.theme}-300 font-bold">"${data.strategy.outlook}"</strong>
                     </div>
-                    <ul>${points}</ul>
+                    <ul class="pl-1">${points}</ul>
                 </section>
             `;
         }
 
+        // Core Rendering Logic
         function renderChart(data) {
             const ctx = document.getElementById('finChart');
             if(!ctx) return;
@@ -420,18 +482,21 @@
                 data: {
                     labels: data.financials.labels,
                     datasets: [
-                        { type: 'bar', label: '매출액(조원)', data: data.financials.revenue, backgroundColor: 'rgba(168, 162, 158, 0.4)', borderColor: 'rgb(168, 162, 158)', borderWidth: 1, yAxisID: 'y' },
+                        { type: 'bar', label: '매출액(조원)', data: data.financials.revenue, backgroundColor: 'rgba(168, 162, 158, 0.3)', borderColor: 'rgb(168, 162, 158)', borderWidth: 1, yAxisID: 'y' },
                         { type: 'line', label: '영업이익(조원)', data: data.financials.profit, backgroundColor: colors.border, borderColor: colors.border, borderWidth: 3, pointBackgroundColor: '#fff', pointBorderColor: colors.border, pointRadius: 4, tension: 0.3, yAxisID: 'y1' }
                     ]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     interaction: { mode: 'index', intersect: false },
-                    plugins: { legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 6, font: { family: 'Pretendard', size: 11 } } }, tooltip: { backgroundColor: 'rgba(28, 25, 23, 0.9)', padding: 10 } },
+                    plugins: { 
+                        legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 6, font: { family: 'Pretendard', size: 11 } } }, 
+                        tooltip: { backgroundColor: 'rgba(28, 25, 23, 0.9)', padding: 10, titleFont: { family: 'Pretendard' }, bodyFont: { family: 'Pretendard' } } 
+                    },
                     scales: {
-                        x: { grid: { display: false }, ticks: { font: { size: 10 } } },
-                        y: { type: 'linear', display: true, position: 'left', title: { display: true, text: '매출', font: { size: 10 } }, grid: { color: 'rgba(231, 229, 228, 0.6)' }, ticks: { font: { size: 10 } } },
-                        y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: '이익', font: { size: 10 } }, grid: { drawOnChartArea: false }, ticks: { font: { size: 10 } } }
+                        x: { grid: { display: false }, ticks: { font: { family: 'Pretendard', size: 10 } } },
+                        y: { type: 'linear', display: true, position: 'left', title: { display: true, text: '매출', font: { family: 'Pretendard', size: 10 } }, grid: { color: 'rgba(231, 229, 228, 0.6)' }, ticks: { font: { family: 'Pretendard', size: 10 } } },
+                        y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: '이익', font: { family: 'Pretendard', size: 10 } }, grid: { drawOnChartArea: false }, ticks: { font: { family: 'Pretendard', size: 10 } } }
                     }
                 }
             });
@@ -441,17 +506,19 @@
             const data = db[companyId];
             if(!data) return;
 
+            // Handle Tab Styles
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 if (btn.getAttribute('data-target') === companyId) {
                     btn.className = `tab-btn px-4 py-2 text-sm font-medium rounded-md transition-all bg-white shadow-sm border-b-2 text-${data.theme}-700 border-${data.theme}-600`;
                 } else {
-                    btn.className = `tab-btn px-4 py-2 text-sm font-medium rounded-md transition-all text-stone-600 hover:text-stone-900`;
+                    btn.className = `tab-btn px-4 py-2 text-sm font-medium rounded-md transition-all text-stone-600 hover:text-stone-900 bg-transparent border-b-2 border-transparent`;
                 }
             });
 
+            // Build HTML Content
             const container = document.getElementById('app-container');
             container.classList.remove('fade-enter');
-            void container.offsetWidth; 
+            void container.offsetWidth; // Trigger DOM reflow to restart CSS animation
 
             container.innerHTML = `
                 ${buildHeader(data)}
@@ -465,14 +532,18 @@
             `;
 
             container.classList.add('fade-enter');
-            renderChart(data);
+            renderChart(data); // Re-initialize Chart.js Canvas
         }
 
+        // Initialize App
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('nav-tabs').addEventListener('click', (e) => {
-                if(e.target.classList.contains('tab-btn')) loadCompany(e.target.getAttribute('data-target'));
+                if(e.target.classList.contains('tab-btn')) {
+                    loadCompany(e.target.getAttribute('data-target'));
+                }
             });
-            loadCompany('hyundai'); // Default load
+            // Load default view
+            loadCompany('hyundai');
         });
     </script>
 </body>
