@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국 휴머노이드 로봇 산업 인터랙티브 리포트</title>
+    
+    <!-- Chosen Palette: Warm Neutral & Tech Blue (Slate 50 to Slate 900 for structure, Blue 600 for primary accents, Emerald 500 for positive highlights) -->
+    
+    <!-- Application Structure Plan: The application uses a dashboard-style tabbed navigation to allow non-linear exploration of the report. It is divided into 4 core sections: 1. Overview (Context & Drivers), 2. Value Chain (Interactive breakdown of technologies and Korean players), 3. Market Prospects (Visualized timeline/growth), 4. Investment Strategy (Actionable time-based insights). This structure transforms a static report into an interactive briefing tool, allowing users to jump directly to data (Value Chain) or insights (Investment) based on their immediate needs. -->
+    
+    <!-- Visualization & Content Choices: 1. Overview: Uses HTML/CSS grid cards to present the "Why Now" factors clearly without overwhelming text. 2. Value Chain: Uses interactive HTML flex blocks simulating a component breakdown; clicking a component reveals specific Korean companies, facilitating targeted learning. NO SVG/Mermaid used. 3. Market Prospects: Utilizes Chart.js (Canvas) to visualize the narrative of B2B early dominance vs B2C later explosion, translating textual timelines into an intuitive trend graph. 4. Investment: Uses interactive tabs to separate current, 6-month, and 1-year strategies, preventing cognitive overload. -->
+    
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 400px;
+            overflow: hidden;
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+                max-height: 450px;
+            }
+        }
+
+        .section-hidden {
+            display: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-btn.active {
+            border-bottom: 2px solid #2563eb;
+            color: #1d4ed8;
+            font-weight: 600;
+        }
+        
+        .vc-item {
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .vc-item.active {
+            background-color: #eff6ff;
+            border-color: #3b82f6;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-btn.active {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center py-4">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <div class="w-8 h-8 rounded bg-blue-600 text-white flex items-center justify-center font-bold text-xl mr-3">H</div>
+                    <h1 class="text-xl font-bold text-slate-800">한국 휴머노이드 산업 분석</h1>
+                </div>
+                <nav class="flex space-x-1 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
+                    <button class="nav-btn active px-4 py-2 text-sm text-slate-600 hover:text-blue-600 whitespace-nowrap transition-colors" data-target="sec-overview">산업 개요</button>
+                    <button class="nav-btn px-4 py-2 text-sm text-slate-600 hover:text-blue-600 whitespace-nowrap transition-colors" data-target="sec-valuechain">밸류체인 및 기업</button>
+                    <button class="nav-btn px-4 py-2 text-sm text-slate-600 hover:text-blue-600 whitespace-nowrap transition-colors" data-target="sec-coretech">핵심 기술 동향</button>
+                    <button class="nav-btn px-4 py-2 text-sm text-slate-600 hover:text-blue-600 whitespace-nowrap transition-colors" data-target="sec-market">시장 전망</button>
+                    <button class="nav-btn px-4 py-2 text-sm text-slate-600 hover:text-blue-600 whitespace-nowrap transition-colors" data-target="sec-investment">투자 전략</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <section id="sec-overview" class="content-section fade-in">
+            <div class="mb-8 bg-white p-6 rounded-lg shadow-sm border border-slate-100">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 border-l-4 border-blue-600 pl-3">휴머노이드 산업의 정의와 부상 배경</h2>
+                <p class="text-slate-600 text-lg leading-relaxed intro-text">
+                    이 섹션은 휴머노이드 로봇 산업이 무엇인지 정의하고, 현재 글로벌 시장과 기술 트렌드에서 왜 가장 주목받는 섹터가 되었는지 핵심 동인을 제시합니다. 텍스트 위주의 정보를 인터랙티브 카드 형태로 재구성하여 핵심 요인들을 빠르게 파악할 수 있도록 구성했습니다.
+                </p>
+            </div>
+
+            <div class="bg-blue-50 p-6 rounded-xl border border-blue-100 mb-10">
+                <h3 class="font-bold text-blue-900 text-lg mb-2">휴머노이드 (Humanoid)란?</h3>
+                <p class="text-blue-800">인간의 신체 구조와 유사한 형태를 갖추고, 인간을 위해 설계된 환경과 도구를 수정 없이 그대로 사용할 수 있는 <strong>범용 로봇</strong>. 최근 시각-언어-행동 모델(VLA)과 결합하여 스스로 판단하고 행동하는 <strong>'Embodied AI(물리적 실체를 가진 AI)'</strong>로 진화 중입니다.</p>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-800 mb-6 text-center">시장이 휴머노이드에 주목하는 3가지 이유</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div class="text-4xl mb-4 text-center">🧠</div>
+                    <h4 class="text-lg font-bold text-slate-800 mb-2 text-center">AI 기술의 임계점 돌파</h4>
+                    <p class="text-slate-600 text-sm">대형언어모델(LLM)이 로봇의 두뇌 역할을 수행하며 복잡한 코딩 없이 자연어 명령을 이해하고 행동으로 변환 가능해졌습니다. (예: 엔비디아 프로젝트 GR00T)</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div class="text-4xl mb-4 text-center">📉</div>
+                    <h4 class="text-lg font-bold text-slate-800 mb-2 text-center">인구 구조와 노동력 부족</h4>
+                    <p class="text-slate-600 text-sm">고령화와 생산인구 감소로 제조업, 물류, 서비스 전반에 심각한 인력난이 발생하여, 인간의 환경을 그대로 쓰는 로봇 수요가 폭발 중입니다.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div class="text-4xl mb-4 text-center">💰</div>
+                    <h4 class="text-lg font-bold text-slate-800 mb-2 text-center">빅테크의 천문학적 자본 집중</h4>
+                    <p class="text-slate-600 text-sm">테슬라 '옵티머스' 개발, MS/오픈AI의 피규어AI 대규모 투자 등 글로벌 기술 리더들의 참전으로 상용화 기대감이 최고조에 달했습니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-valuechain" class="content-section section-hidden fade-in">
+            <div class="mb-8 bg-white p-6 rounded-lg shadow-sm border border-slate-100">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 border-l-4 border-blue-600 pl-3">한국 휴머노이드 밸류체인 및 주력 기업</h2>
+                <p class="text-slate-600 text-lg leading-relaxed intro-text">
+                    이 섹션은 휴머노이드 로봇을 구성하는 핵심 부품 및 기술 밸류체인을 시각화하고, 한국 시장에서 활약하는 주요 상장/비상장 기업을 연결하여 보여줍니다. 아래의 밸류체인 블록을 <strong>클릭</strong>하여 해당 부문의 역할과 관련 한국 기업 상세 정보를 탐색해 보세요. 한국은 특히 하드웨어 부품과 SI에 강점을 가집니다.
+                </p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="w-full lg:w-1/2 flex flex-col gap-4">
+                    <h3 class="font-bold text-slate-700 mb-2">하드웨어 및 시스템 구성 요소 (클릭하세요)</h3>
+                    
+                    <div class="vc-item active bg-white border-2 border-slate-200 rounded-lg p-5 flex items-center justify-between" data-vc="si">
+                        <div>
+                            <h4 class="font-bold text-lg text-slate-800">완제품 / SI / AI</h4>
+                            <p class="text-sm text-slate-500">로봇 설계, 조립 및 두뇌(AI) 연동</p>
+                        </div>
+                        <div class="text-2xl">🤖</div>
+                    </div>
+
+                    <div class="vc-item bg-white border-2 border-slate-200 rounded-lg p-5 flex items-center justify-between" data-vc="reducer">
+                        <div>
+                            <h4 class="font-bold text-lg text-slate-800">감속기</h4>
+                            <p class="text-sm text-slate-500">회전력 제어 및 정밀 움직임 (원가 비중 최상)</p>
+                        </div>
+                        <div class="text-2xl">⚙️</div>
+                    </div>
+
+                    <div class="vc-item bg-white border-2 border-slate-200 rounded-lg p-5 flex items-center justify-between" data-vc="motor">
+                        <div>
+                            <h4 class="font-bold text-lg text-slate-800">모터 / 구동기</h4>
+                            <p class="text-sm text-slate-500">관절의 움직임을 만드는 근육 역할</p>
+                        </div>
+                        <div class="text-2xl">⚡</div>
+                    </div>
+
+                    <div class="vc-item bg-white border-2 border-slate-200 rounded-lg p-5 flex items-center justify-between" data-vc="sensor">
+                        <div>
+                            <h4 class="font-bold text-lg text-slate-800">센서 / 비전</h4>
+                            <p class="text-sm text-slate-500">외부 환경 인식 (시각, 힘, 토크)</p>
+                        </div>
+                        <div class="text-2xl">👁️</div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2">
+                    <div class="bg-white rounded-xl shadow-md border border-slate-200 p-8 h-full sticky top-24">
+                        <div id="vc-content">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-coretech" class="content-section section-hidden fade-in">
+            <div class="mb-8 bg-white p-6 rounded-lg shadow-sm border border-slate-100">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 border-l-4 border-blue-600 pl-3">핵심 기술 동향 및 상용화 로드맵</h2>
+                <p class="text-slate-600 text-lg leading-relaxed intro-text">
+                    현재 휴머노이드 시장에서 가장 중점적으로 자본과 연구가 집중되는 기술 분야와 글로벌 선도 기업들의 상용화 진행 단계를 분석합니다. 하드웨어 부품의 일체화와 AI 기반 파운데이션 모델의 결합이 상용화 시기를 급격히 앞당기고 있습니다.
+                </p>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-800 mb-4">휴머노이드 성장을 이끄는 8대 핵심 기술 트렌드</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+                <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-3xl mb-3">🧠</div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-2">고성능 AI 및 머신러닝</h4>
+                    <p class="text-xs text-slate-600">강화/모방 학습, 생성형 AI를 활용한 로봇의 자율 판단 및 환경 인지, 복잡한 조립 작업 수행 능력 향상.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-3xl mb-3">⚙️</div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-2">정밀 액추에이터/감속기</h4>
+                    <p class="text-xs text-slate-600">유성형/하모닉형/RV형 감속기와 서보모터 통합. 인간의 근육처럼 부드럽고 강력한 정밀 제어.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-3xl mb-3">👁️</div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-2">다중 센싱 및 센서 퓨전</h4>
+                    <p class="text-xs text-slate-600">라이다, 카메라, IMU, 촉각 센서 데이터 실시간 통합으로 3차원 환경 인지 및 정확한 객체 인식.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-3xl mb-3">🗣️</div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-2">인간-로봇 상호작용(HRI)</h4>
+                    <p class="text-xs text-slate-600">자연어 처리, 감정/제스처 인식, 음성 명령을 통해 로봇과 인간이 직관적이고 안전하게 소통.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-3xl mb-3">🚶</div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-2">이족 보행 및 동적 제어</h4>
+                    <p class="text-xs text-slate-600">불규칙한 지형 이동, 계단 오르내리기, 장애물 회피 등 복잡한 환경에서의 동적 균형 유지 기술.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-3xl mb-3">💻</div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-2">로봇 제어 SW 및 OS</h4>
+                    <p class="text-xs text-slate-600">실시간 운영 체제, 동작/경로 계획 알고리즘, 멀티태스킹 기능을 제공하는 통합 플랫폼.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-3xl mb-3">☁️</div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-2">클라우드 및 엣지 AI</h4>
+                    <p class="text-xs text-slate-600">무거운 연산(AI 추론)은 클라우드에서, 실시간 제어는 엣지에서 처리하는 하이브리드 아키텍처.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-3xl mb-3">👯</div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-2">디지털 트윈 및 시뮬레이션</h4>
+                    <p class="text-xs text-slate-600">가상 환경에서 로봇 행동 예측 및 최적화를 수행하여 실제 개발 시간 및 비용을 획기적으로 단축.</p>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-800 mb-4">주요 기업별 핵심 기술 및 상용화 단계</h3>
+            <div class="overflow-x-auto mb-10 bg-white rounded-lg border border-slate-200 shadow-sm">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50 border-b border-slate-200 text-slate-700">
+                            <th class="p-4 font-bold whitespace-nowrap">기업명</th>
+                            <th class="p-4 font-bold whitespace-nowrap">모델명</th>
+                            <th class="p-4 font-bold min-w-[250px]">핵심 보유 기술 및 차별점</th>
+                            <th class="p-4 font-bold min-w-[200px]">현재 상용화 단계</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm text-slate-600 divide-y divide-slate-100">
+                        <!-- 글로벌 기업 -->
+                        <tr class="bg-slate-100"><td colspan="4" class="p-3 font-bold text-slate-800 text-base">🌍 [글로벌] 리딩 기업</td></tr>
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4 font-bold text-slate-800">Tesla (미국)</td>
+                            <td class="p-4 font-medium">Optimus (Gen 2)</td>
+                            <td class="p-4">자율주행 FSD 기반의 시각 AI 내재화, 자체 액추에이터 설계 능력을 통한 <strong>압도적인 대량 양산 및 원가 절감 구조</strong> 확보</td>
+                            <td class="p-4">
+                                <span class="inline-block px-2 py-1 bg-amber-100 text-amber-800 rounded text-xs font-bold mb-1">자사 공장 실증</span><br>기가팩토리 배치 (2025)
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4 font-bold text-slate-800">Figure AI (미국)</td>
+                            <td class="p-4 font-medium">Figure 02</td>
+                            <td class="p-4">OpenAI 협력을 통한 자연어 명령 즉각 변환(VLA 추론 능력). 정밀한 양손 조작 능력이 탁월.</td>
+                            <td class="p-4">
+                                <span class="inline-block px-2 py-1 bg-amber-100 text-amber-800 rounded text-xs font-bold mb-1">외부 기업 PoC</span><br>BMW 공장 차체 조립 투입
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4 font-bold text-slate-800">Boston Dynamics</td>
+                            <td class="p-4 font-medium">Atlas (전동식)</td>
+                            <td class="p-4">수십 년간 축적된 <strong>세계 최고 수준의 동적 제어</strong> 기술. 전동식 전환으로 관절 가동범위 극대화.</td>
+                            <td class="p-4">
+                                <span class="inline-block px-2 py-1 bg-amber-100 text-amber-800 rounded text-xs font-bold mb-1">모기업 공장 실증</span><br>현대차 제조 라인 투입 준비
+                            </td>
+                        </tr>
+                        
+                        <!-- 국내 기업 -->
+                        <tr class="bg-blue-50/50 border-t-2 border-blue-200"><td colspan="4" class="p-3 font-bold text-blue-900 text-base">🇰🇷 [국내] 주력 기업</td></tr>
+                        <tr class="hover:bg-blue-50 transition-colors bg-white">
+                            <td class="p-4 font-bold text-blue-700">레인보우로보틱스</td>
+                            <td class="p-4 font-medium">RB-Y1 / HUBO</td>
+                            <td class="p-4">부품 내재화율 최상위. 양팔형 휴머노이드(RB-Y1) 시제품. <strong>삼성전자의 AI/제조 생태계 결합</strong>.</td>
+                            <td class="p-4">
+                                <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs font-bold mb-1">시제품 → 초기 양산</span><br>삼성 제조 라인/의료 확장 기대
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-blue-50 transition-colors bg-white">
+                            <td class="p-4 font-bold text-blue-700">로보티즈</td>
+                            <td class="p-4 font-medium">AI Worker</td>
+                            <td class="p-4">핵심 액추에이터 '다이나믹셀' 원천 기술 보유. 자율주행 경험 바탕 실내외 작업형 로봇 특화.</td>
+                            <td class="p-4">
+                                <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs font-bold mb-1">시제품 → 초기 양산</span><br>제조/물류 B2B 진입 준비
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-blue-50 transition-colors bg-white">
+                            <td class="p-4 font-bold text-blue-700">두산로보틱스</td>
+                            <td class="p-4 font-medium">협동로봇 확장</td>
+                            <td class="p-4">글로벌 Top-tier 협동로봇 라인업. 최근 <strong>엔비디아(Isaac 플랫폼)와의 협력</strong>으로 AI 비전/제어 고도화.</td>
+                            <td class="p-4">
+                                <span class="inline-block px-2 py-1 bg-emerald-100 text-emerald-800 rounded text-xs font-bold mb-1">시장 안정화 (협동)</span><br>고도화된 협동로봇 점유율 확대
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-800 mb-4">2026년 국내 핵심 기술 개발 로드맵</h3>
+            <div class="overflow-x-auto mb-10 bg-white rounded-lg border border-slate-200 shadow-sm">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-indigo-50 border-b border-indigo-200 text-indigo-800">
+                            <th class="p-4 font-bold whitespace-nowrap">기술 분야</th>
+                            <th class="p-4 font-bold whitespace-nowrap">현재 상태 (2026년 상반기)</th>
+                            <th class="p-4 font-bold min-w-[200px]">개발사 / 주도 기업</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm text-slate-600 divide-y divide-slate-100">
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4 font-bold text-slate-800">휴머노이드 액추에이터</td>
+                            <td class="p-4"><span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded text-xs font-bold">시제품 → 양산 단계</span></td>
+                            <td class="p-4"><strong>에스피지</strong> (2026년 상반기 양산 예정)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4 font-bold text-slate-800">정밀감속기 (RV/하모닉형)</td>
+                            <td class="p-4"><span class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-bold">안정적 양산 중</span></td>
+                            <td class="p-4"><strong>에스피지</strong> (2025년 200-250억원 매출 예상)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4 font-bold text-slate-800">휴머노이드 완성품</td>
+                            <td class="p-4"><span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded text-xs font-bold">시제품 → 초기 양산</span></td>
+                            <td class="p-4"><strong>레인보우로보틱스</strong> (RB-Y1), <strong>로보티즈</strong> (AI Worker)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4 font-bold text-slate-800">로봇 제어 SW</td>
+                            <td class="p-4"><span class="px-2 py-1 bg-purple-100 text-purple-700 rounded text-xs font-bold">고도화 단계</span></td>
+                            <td class="p-4"><strong>뉴로메카</strong>, <strong>클로봇</strong></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4 font-bold text-slate-800">의료용 수술 로봇</td>
+                            <td class="p-4"><span class="px-2 py-1 bg-amber-100 text-amber-700 rounded text-xs font-bold">ARPA-H 과제 진행 중</span></td>
+                            <td class="p-4"><strong>레인보우로보틱스</strong>, <strong>고영테크놀러지</strong></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4 font-bold text-slate-800">협동로봇 (Cobot)</td>
+                            <td class="p-4"><span class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-bold">시장 안정화 단계</span></td>
+                            <td class="p-4"><strong>두산로보틱스</strong>, <strong>뉴로메카</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-10 shadow-inner">
+                <h3 class="font-bold text-slate-800 mb-4 flex items-center"><span class="text-2xl mr-2">💡</span> 핵심 용어 사전</h3>
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-bold text-blue-700 text-sm mb-1">액추에이터 (Actuator)</h4>
+                        <p class="text-sm text-slate-600">전기, 유압, 공압 등의 에너지를 기계적인 움직임으로 변환하는 장치. 로봇의 관절이나 손가락을 움직이는 핵심 부품입니다.</p>
+                    </div>
+                    <div class="border-t border-slate-200 pt-3">
+                        <h4 class="font-bold text-blue-700 text-sm mb-1">강화 학습 (Reinforcement Learning)</h4>
+                        <p class="text-sm text-slate-600">에이전트(로봇)가 시행착오를 통해 환경과 상호작용하며 보상을 최대화하는 방향으로 최적의 행동 전략을 스스로 학습하는 인공지능 기법입니다.</p>
+                    </div>
+                    <div class="border-t border-slate-200 pt-3">
+                        <h4 class="font-bold text-blue-700 text-sm mb-1">센서 퓨전 (Sensor Fusion)</h4>
+                        <p class="text-sm text-slate-600">카메라, 라이다, 레이더 등 여러 종류의 센서에서 얻은 데이터를 통합하여 단일 센서의 한계를 극복하고, 환경에 대한 더 정확하고 신뢰성 있는 정보를 생성하는 기술입니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-800 mb-6">상용화 마일스톤 (단계별 로드맵)</h3>
+            <div class="relative max-w-5xl mx-auto px-4 py-6 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-300 via-indigo-300 to-purple-300 h-[80%] top-[10%] hidden md:block"></div>
+                
+                <div class="flex flex-col md:flex-row justify-between items-stretch w-full relative z-10 gap-6">
+                    <div class="flex-1 bg-white p-6 rounded-lg border-2 border-blue-400 shadow-md relative z-10 hover:-translate-y-1 transition-transform duration-300">
+                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-sm whitespace-nowrap">~ 2025 (현재)</div>
+                        <h4 class="font-bold text-slate-800 mt-4 text-center text-lg">PoC 및 제한적 실증 단계</h4>
+                        <div class="w-12 h-1 bg-blue-500 mx-auto my-3 rounded"></div>
+                        <p class="text-sm text-slate-600 text-center">연구소(Lab)를 벗어나 완성차 및 대형 물류 창고 등 <strong>변수가 통제된 환경</strong>에서 테스트 중입니다.<br><br>단순 부품 이동, 박스 분류 등 정해진 모션을 반복 수행하며 AI 학습을 위한 데이터를 축적하는 시기입니다.</p>
+                    </div>
+                    
+                    <div class="hidden md:flex items-center justify-center"><span class="text-blue-400 text-3xl">➔</span></div>
+                    
+                    <div class="flex-1 bg-white p-6 rounded-lg border-2 border-indigo-400 shadow-md relative z-10 hover:-translate-y-1 transition-transform duration-300">
+                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-indigo-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-sm whitespace-nowrap">2026 ~ 2028</div>
+                        <h4 class="font-bold text-slate-800 mt-4 text-center text-lg">B2B 본격 상용화 및 양산</h4>
+                        <div class="w-12 h-1 bg-indigo-500 mx-auto my-3 rounded"></div>
+                        <p class="text-sm text-slate-600 text-center">하드웨어 양산 체제 구축으로 대당 가격이 하락(3~4천만원 수준)하여 경제성이 확보됩니다.<br><br>제조업의 3D(위험/더럽고/어려운) 공정 및 물류 현장의 인력 부족을 휴머노이드가 본격적으로 대체하기 시작합니다.</p>
+                    </div>
+
+                    <div class="hidden md:flex items-center justify-center"><span class="text-indigo-400 text-3xl">➔</span></div>
+                    
+                    <div class="flex-1 bg-white p-6 rounded-lg border-2 border-purple-400 shadow-md relative z-10 hover:-translate-y-1 transition-transform duration-300">
+                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-purple-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-sm whitespace-nowrap">2030 이후 ~</div>
+                        <h4 class="font-bold text-slate-800 mt-4 text-center text-lg">B2C 범용 서비스 영역 확장</h4>
+                        <div class="w-12 h-1 bg-purple-500 mx-auto my-3 rounded"></div>
+                        <p class="text-sm text-slate-600 text-center">배터리 혁신과 AI 파운데이션 모델의 극도의 고도화로 예상치 못한 환경(집, 상점)에서도 적응 가능해집니다.<br><br>가사 도우미, 노인/환자 돌봄, 리테일 서비스 등 일상생활에 투입되는 '1가구 1로봇' 시대로 진입합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-market" class="content-section section-hidden fade-in">
+            <div class="mb-8 bg-white p-6 rounded-lg shadow-sm border border-slate-100">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 border-l-4 border-blue-600 pl-3">기술 개발 현황 및 중장기 시장 전망</h2>
+                <p class="text-slate-600 text-lg leading-relaxed intro-text">
+                    본 섹션은 현재 휴머노이드의 상용화 준비 단계와 향후 시장 침투 시나리오를 시각적 트렌드로 제공합니다. 현재는 통제된 환경의 B2B 실증 단계이나, 데이터 축적 및 단가 하락을 기점으로 B2C 시장으로 폭발적으로 확장될 것으로 예상되는 차세대 메가 트렌드입니다. 아래 차트는 이러한 전환의 흐름을 나타냅니다.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white p-5 rounded border-l-4 border-amber-500 shadow-sm">
+                    <h3 class="font-bold text-slate-800 mb-2">현재 현황 (PoC 단계)</h3>
+                    <p class="text-sm text-slate-600">BMW, 아마존 등 자동차/물류 현장에서 피규어AI, 디짓 등을 투입하여 단순 반복 작업을 실증 테스트 중. 테슬라는 2025년 자사 공장 수천 대 배치를 선언.</p>
+                </div>
+                <div class="bg-white p-5 rounded border-l-4 border-emerald-500 shadow-sm">
+                    <h3 class="font-bold text-slate-800 mb-2">한국의 준비</h3>
+                    <p class="text-sm text-slate-600">삼성전자(레인보우로보틱스 인수/투자), 현대차(보스턴다이내믹스 인수) 등 대기업을 주축으로 자체 개발 및 부품 내재화를 위한 R&D 가속화.</p>
+                </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-4 text-center">휴머노이드 시장 침투 전망 시나리오 (예측 트렌드)</h3>
+            <div class="chart-container">
+                <canvas id="marketChart"></canvas>
+            </div>
+            <p class="text-center text-xs text-slate-400 mt-2">* 본 차트는 보고서의 전망을 시각화하기 위한 추세선 모델입니다.</p>
+        </section>
+
+        <section id="sec-investment" class="content-section section-hidden fade-in">
+            <div class="mb-8 bg-white p-6 rounded-lg shadow-sm border border-slate-100">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 border-l-4 border-blue-600 pl-3">투자 가치 연구 및 전략</h2>
+                <p class="text-slate-600 text-lg leading-relaxed intro-text">
+                    이 섹션은 앞선 산업 분석을 바탕으로 주식 시장 관점에서의 대응 전략을 도출합니다. 현재 로봇 섹터의 주가 반영(Pricing) 수준을 진단하고, 투자자의 시계열(단기 6개월 vs 중기 1년)에 맞춘 맞춤형 접근 전략을 탭 형태로 제공하여 신속한 의사결정을 지원합니다.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
+                <div class="flex flex-col sm:flex-row border-b border-slate-200 bg-slate-50">
+                    <button class="tab-btn active flex-1 py-4 px-6 text-center font-medium text-slate-700 hover:bg-slate-100 transition-colors focus:outline-none" data-tab="tab-current">
+                        현재 주가 반영 (Pricing)
+                    </button>
+                    <button class="tab-btn flex-1 py-4 px-6 text-center font-medium text-slate-700 hover:bg-slate-100 transition-colors focus:outline-none border-t sm:border-t-0 sm:border-l border-slate-200" data-tab="tab-short">
+                        단기 전략 (6개월 기준)
+                    </button>
+                    <button class="tab-btn flex-1 py-4 px-6 text-center font-medium text-slate-700 hover:bg-slate-100 transition-colors focus:outline-none border-t sm:border-t-0 sm:border-l border-slate-200" data-tab="tab-mid">
+                        중기 전략 (1년 기준)
+                    </button>
+                </div>
+
+                <div class="p-8 min-h-[300px]">
+                    <div id="tab-current" class="tab-content fade-in">
+                        <div class="flex items-center mb-4">
+                            <span class="text-3xl mr-3">📊</span>
+                            <h3 class="text-xl font-bold text-slate-800">모멘텀 장세와 미래 가치 선반영</h3>
+                        </div>
+                        <p class="text-slate-600 mb-4 leading-relaxed">한국 증시에서 로봇 섹터(특히 휴머노이드 테마)는 실적 기반보다는 <strong>기대감과 글로벌 이벤트에 의해 주가가 요동치는 특성</strong>을 보입니다.</p>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-600">
+                            <li>테슬라 AI Day, 엔비디아 GTC 등 글로벌 빅테크 이벤트에 강하게 연동.</li>
+                            <li>삼성전자의 레인보우로보틱스 지분 투자 등 대기업 행보 시 밸류에이션(PER, PBR 등)이 미래 실적을 극단적으로 끌어와 선반영되는 경향.</li>
+                            <li>현재 다수의 로봇주가 전통적 가치평가 방식으로는 고평가 영역에 위치.</li>
+                        </ul>
+                    </div>
+
+                    <div id="tab-short" class="tab-content section-hidden fade-in">
+                        <div class="flex items-center mb-4">
+                            <span class="text-3xl mr-3">⚡</span>
+                            <h3 class="text-xl font-bold text-slate-800">이벤트 드리븐 (Event-driven) 트레이딩</h3>
+                        </div>
+                        <div class="bg-blue-50 text-blue-800 p-3 rounded mb-4 font-semibold text-sm">
+                            핵심 전략: 변동성 활용 및 글로벌 뉴스 플로우 추적
+                        </div>
+                        <p class="text-slate-600 mb-4 leading-relaxed">향후 6개월 내에는 휴머노이드 기업들의 가시적인 대규모 영업이익 흑자 전환을 기대하기 이릅니다. 따라서 트레이딩 관점의 접근이 유효합니다.</p>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-600">
+                            <li><strong>주목할 이벤트:</strong> 테슬라 옵티머스 팩토리 양산/투입 소식, 오픈AI/엔비디아의 새로운 로봇 파운데이션 모델 발표.</li>
+                            <li><strong>유망 섹터:</strong> 이러한 이벤트 발생 시 테마 순환매 측면에서 주가 탄력성이 가장 높은 <strong>'감속기' 및 '모터' 등 하드웨어 핵심 부품주</strong> 단기 공략.</li>
+                        </ul>
+                    </div>
+
+                    <div id="tab-mid" class="tab-content section-hidden fade-in">
+                        <div class="flex items-center mb-4">
+                            <span class="text-3xl mr-3">🏗️</span>
+                            <h3 class="text-xl font-bold text-slate-800">실질 벤더(Vendor) 진입 기반 옥석 가리기</h3>
+                        </div>
+                        <div class="bg-emerald-50 text-emerald-800 p-3 rounded mb-4 font-semibold text-sm">
+                            핵심 전략: 펀더멘털 확인 및 조정 시 분할 매수
+                        </div>
+                        <p class="text-slate-600 mb-4 leading-relaxed">1년 이상의 중기 시계열에서는 단순 테마성을 벗어나 실질적인 공급망(Supply Chain) 합류 여부가 생존과 주가를 결정짓게 됩니다.</p>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-600">
+                            <li><strong>판단 기준:</strong> 삼성전자, 현대차 혹은 글로벌 완성형 로봇 기업의 서플라이 체인에 실제로 진입하여 부품 납품 레퍼런스를 확보했는가?</li>
+                            <li><strong>포트폴리오 압축:</strong> 핵심 부품 국산화 및 양산 수율 안정화에 성공한 기업, 대기업에 직접 편입된 SI 로봇사 위주로 투자 대상 압축.</li>
+                            <li>고평가 논란 속에서도 산업의 성장 방향성은 확고하므로, 실적이 뒷받침되는 옥석 기업의 <strong>조정 국면을 분할 매수의 기회</strong>로 활용.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center text-xs text-slate-400 border-t border-slate-200 pt-4">
+                본 웹페이지는 제공된 산업 분석 보고서를 기반으로 구성된 참고 자료이며, 투자 결과에 대한 책임을 지지 않습니다.
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const vcData = {
+            'si': {
+                title: '완제품 / SI / AI',
+                desc: '휴머노이드 로봇 전체 시스템의 뼈대를 잡고 설계, 조립 및 AI 기반의 두뇌 소프트웨어를 연동하는 총괄 영역입니다.',
+                companies: [
+                    { name: '레인보우로보틱스', detail: '삼성전자의 지분 투자를 받았으며, 이족보행 로봇 휴보(HUBO) 기술력 보유. 삼성의 핵심 로봇 플랫폼으로 성장 기대.' },
+                    { name: '현대차 / 보스턴다이내믹스', detail: '세계 최고 수준의 동적 제어 기술을 가진 보스턴다이내믹스를 인수하여 차세대 로보틱스 선도.' },
+                    { name: '두산로보틱스', detail: '협동로봇 강자이나 최근 엔비디아 등 글로벌 기업과의 협력 확대로 범용 로봇으로의 확장 모색 중.' }
+                ]
+            },
+            'reducer': {
+                title: '감속기',
+                desc: '모터의 회전력을 힘으로 변환하고 미세하게 제어하여 로봇의 정밀한 움직임을 구현하는 핵심 부품. 로봇 제조 원가에서 가장 높은 비중을 차지합니다.',
+                companies: [
+                    { name: '에스피지 (SPG)', detail: '정밀 감속기(SRG, SHG) 국산화 선도 기업. 산업용부터 휴머노이드 관절 적용까지 레퍼런스 확대 중.' },
+                    { name: '에스비비테크', detail: '하모닉 감속기 원천 기술을 보유하고 있으며, 부품 국산화 수혜주로 꼽힘.' },
+                    { name: '인탑스', detail: 'IT 부품 제조 역량을 바탕으로 로봇 EMS(위탁생산) 및 관련 부품 조립 밸류체인 진입.' }
+                ]
+            },
+            'motor': {
+                title: '모터 / 구동기',
+                desc: '로봇의 관절마다 부착되어 인간의 근육처럼 실제 움직임을 만들어내는 동력 장치입니다.',
+                companies: [
+                    { name: '하이젠알앤엠', detail: '범용 및 서보 모터 등 다양한 모터 제조 역량을 기반으로 로봇용 액추에이터 시장 공략.' },
+                    { name: '알에스오토메이션', detail: '로봇 모션 제어기 및 엔코더 부문 핵심 기술 보유, 스마트팩토리 및 로봇 구동 제어 분야 특화.' }
+                ]
+            },
+            'sensor': {
+                title: '센서 / 비전',
+                desc: '시각 데이터 수집, 손끝의 힘/토크 조절 등 외부 환경을 인지하고 AI 모델에 데이터를 전달하는 감각 기관입니다.',
+                companies: [
+                    { name: '고영', detail: '3D 측정 검사 장비 세계 1위 기술력을 바탕으로 로봇 비전 센서 및 의료용 로봇 분야 진출.' },
+                    { name: '큐알티 / 동운아나텍', detail: '반도체 신뢰성 평가 및 햅틱/AF 제어 기술을 로봇의 미세 감각 및 비전 제어로 응용 가능.' }
+                ]
+            }
+        };
+
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.content-section');
+        let chartInitialized = false;
+
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                navBtns.forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+
+                const targetId = e.target.getAttribute('data-target');
+                sections.forEach(sec => {
+                    if(sec.id === targetId) {
+                        sec.classList.remove('section-hidden');
+                        if(targetId === 'sec-market' && !chartInitialized) {
+                            initChart();
+                            chartInitialized = true;
+                        }
+                    } else {
+                        sec.classList.add('section-hidden');
+                    }
+                });
+            });
+        });
+
+        const vcItems = document.querySelectorAll('.vc-item');
+        const vcContent = document.getElementById('vc-content');
+
+        function updateVcContent(key) {
+            const data = vcData[key];
+            let html = `
+                <div class="mb-6 fade-in">
+                    <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-bold mb-3">선택된 밸류체인</span>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-2">${data.title}</h3>
+                    <p class="text-slate-600 leading-relaxed">${data.desc}</p>
+                </div>
+                <h4 class="font-bold text-slate-800 border-b border-slate-200 pb-2 mb-4">주요 관련 한국 기업</h4>
+                <div class="space-y-4">
+            `;
+            
+            data.companies.forEach(comp => {
+                html += `
+                    <div class="p-4 bg-slate-50 rounded border border-slate-100 fade-in">
+                        <div class="font-bold text-blue-700 mb-1">${comp.name}</div>
+                        <p class="text-sm text-slate-600 leading-relaxed">${comp.detail}</p>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            vcContent.innerHTML = html;
+        }
+
+        vcItems.forEach(item => {
+            item.addEventListener('click', () => {
+                vcItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                updateVcContent(item.getAttribute('data-vc'));
+            });
+        });
+
+        updateVcContent('si');
+
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                tabBtns.forEach(b => {
+                    b.classList.remove('active');
+                    b.classList.add('text-slate-700', 'bg-slate-50');
+                });
+                e.target.classList.add('active');
+                e.target.classList.remove('text-slate-700', 'bg-slate-50');
+
+                const targetTab = e.target.getAttribute('data-tab');
+                tabContents.forEach(content => {
+                    if(content.id === targetTab) {
+                        content.classList.remove('section-hidden');
+                    } else {
+                        content.classList.add('section-hidden');
+                    }
+                });
+            });
+        });
+
+        function initChart() {
+            const ctx = document.getElementById('marketChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2024', '2025', '2026', '2027', '2029', '2031', '2035+'],
+                    datasets: [
+                        {
+                            label: 'B2B 시장 (제조/물류 대체)',
+                            data: [5, 15, 35, 60, 85, 100, 120],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'B2C 시장 (가사/돌봄 범용)',
+                            data: [0, 0, 2, 8, 30, 90, 250],
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: { family: "'Pretendard', sans-serif", size: 12 }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += '지수 ' + context.parsed.y;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '시장 성장 지수 (상대값)',
+                                font: { family: "'Pretendard', sans-serif" }
+                            },
+                            grid: { borderDash: [4, 4] }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '시간 흐름',
+                                font: { family: "'Pretendard', sans-serif" }
+                            },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
