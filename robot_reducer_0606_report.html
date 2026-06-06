@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로봇 감속기 산업·기업 통합 분석 보고서</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: #f5f5f5;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+        }
+
+        header {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 40px;
+            text-align: left;
+        }
+
+        header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Main Category Tabs (Level 1) */
+        .category-tabs {
+            display: flex;
+            background: #ffffff;
+            border-bottom: 3px solid #e0e0e0;
+            overflow-x: auto;
+            position: sticky;
+            top: 0;
+            z-index: 101;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .category-tab {
+            flex: 1;
+            padding: 20px 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: 700;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+
+        .category-tab:hover {
+            background: #f9f9f9;
+            color: #333;
+        }
+
+        .category-tab.active {
+            color: #0066cc;
+            border-bottom-color: #0066cc;
+        }
+
+        /* Sub Tabs (Level 2) */
+        .sub-tabs {
+            display: none;
+            background: #f9f9f9;
+            border-bottom: 2px solid #e0e0e0;
+            overflow-x: auto;
+            position: sticky;
+            top: 67px;
+            z-index: 100;
+        }
+
+        .sub-tabs.active {
+            display: flex;
+        }
+
+        .sub-tab {
+            flex: 1;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            min-width: 140px;
+        }
+
+        .sub-tab:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .sub-tab.active {
+            color: #0066cc;
+            border-bottom-color: #0066cc;
+        }
+
+        .category-section {
+            display: none;
+        }
+
+        .category-section.active {
+            display: block;
+        }
+
+        .content {
+            padding: 40px;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        section h2 {
+            font-size: 26px;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        section h3 {
+            font-size: 17px;
+            color: #1a1a1a;
+            margin-top: 28px;
+            margin-bottom: 14px;
+            font-weight: 700;
+        }
+
+        section h4 {
+            font-size: 15px;
+            color: #333;
+            margin-top: 16px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        h5 {
+            font-size: 14px;
+            color: #333;
+            margin-top: 12px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .subsection {
+            background: #fafafa;
+            padding: 16px 20px;
+            margin: 16px 0;
+            border-left: 3px solid #0066cc;
+            border-radius: 2px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0;
+            background: white;
+            border: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: #f5f5f5;
+            color: #333;
+            padding: 13px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 12px 13px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 13px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        .annotation {
+            background: #fafafa;
+            border-left: 3px solid #0066cc;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 2px;
+        }
+
+        .annotation strong {
+            color: #0066cc;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .answer {
+            background: #fafafa;
+            border-left: 3px solid #0066cc;
+            padding: 15px 20px;
+            margin: 15px 0 15px 40px;
+            border-radius: 2px;
+        }
+
+        .answer strong {
+            color: #0066cc;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        ul {
+            margin-left: 22px;
+            margin-bottom: 12px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            font-weight: 600;
+            border-radius: 1px;
+        }
+
+        .quote {
+            border-left: 3px solid #0066cc;
+            padding-left: 16px;
+            margin: 16px 0;
+            font-style: italic;
+            color: #555;
+            font-size: 13px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .box {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            padding: 16px;
+            border-radius: 2px;
+        }
+
+        .box h4 {
+            color: #0066cc;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .box ul {
+            margin-left: 20px;
+            font-size: 13px;
+            margin-bottom: 0;
+        }
+
+        .box li {
+            margin-bottom: 5px;
+        }
+
+        .swot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 16px 0;
+        }
+
+        .swot-box {
+            padding: 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 2px;
+            background: #fafafa;
+        }
+
+        .swot-box h5 {
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .swot-box ul {
+            margin-left: 18px;
+            font-size: 12px;
+            margin-bottom: 0;
+        }
+
+        .swot-box li {
+            margin-bottom: 4px;
+            font-size: 12px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 2px;
+            font-size: 11px;
+            font-weight: 600;
+            background: #e8f4ff;
+            color: #0066cc;
+            margin-bottom: 10px;
+        }
+
+        .rating {
+            display: inline-block;
+            background: #0066cc;
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .info-box {
+            background: #f0f8ff;
+            border-left: 4px solid #0066cc;
+            padding: 13px;
+            margin: 12px 0;
+            font-size: 13px;
+            border-radius: 2px;
+        }
+
+        .info-box h4 {
+            color: #0066cc;
+            margin-bottom: 8px;
+            margin-top: 0;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 24px 40px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .reference {
+            background: #fafafa;
+            padding: 13px 15px;
+            margin-top: 16px;
+            border-radius: 2px;
+            font-size: 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .reference h5 {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .reference a {
+            color: #0066cc;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .reference a:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            margin-bottom: 12px;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .swot-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-tab {
+                flex: 0 0 auto;
+                min-width: 140px;
+                padding: 15px 12px;
+                font-size: 14px;
+            }
+
+            .sub-tab {
+                flex: 0 0 auto;
+                min-width: 120px;
+                padding: 12px 12px;
+                font-size: 12px;
+            }
+
+            header {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 24px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            section h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 로봇 감속기 산업·기업 통합 분석</h1>
+            <p>산업 분석 & 기업분석 | 한국 경쟁력 평가 및 투자 분석 (2026년 6월 최신)</p>
+        </header>
+
+        <!-- CATEGORY TABS (Level 1) -->
+        <div class="category-tabs">
+            <button class="category-tab active" onclick="switchCategory(0)">산업분석</button>
+            <button class="category-tab" onclick="switchCategory(1)">기업분석</button>
+        </div>
+
+        <!-- SUB TABS (Level 2) - 산업분석 -->
+        <div class="sub-tabs industry-tabs active">
+            <button class="sub-tab active" onclick="switchIndustryTab(0)">기초개념</button>
+            <button class="sub-tab" onclick="switchIndustryTab(1)">수요분석</button>
+            <button class="sub-tab" onclick="switchIndustryTab(2)">경쟁력평가</button>
+            <button class="sub-tab" onclick="switchIndustryTab(3)">비판적검증</button>
+            <button class="sub-tab" onclick="switchIndustryTab(4)">최종평가</button>
+        </div>
+
+        <!-- SUB TABS (Level 2) - 기업분석 -->
+        <div class="sub-tabs company-tabs">
+            <button class="sub-tab active" onclick="switchCompanyTab(0)">에스피지</button>
+            <button class="sub-tab" onclick="switchCompanyTab(1)">에스비비테크</button>
+            <button class="sub-tab" onclick="switchCompanyTab(2)">해성에어로보틱스</button>
+            <button class="sub-tab" onclick="switchCompanyTab(3)">종합비교평가</button>
+        </div>
+
+        <!-- ==================== CATEGORY 1: 산업분석 ==================== -->
+        <div class="category-section active">
+
+            <!-- Section 1: 기초개념 -->
+            <div class="content active">
+                <section>
+                    <h2>Section 1. 기초 개념 정리</h2>
+
+                    <h3>1-1. 감속기의 정의</h3>
+                    <div class="subsection">
+                        <p><strong>감속기는 고속 회전 모터(또는 엔진)의 회전력을 감속시켜 원하는 속도와 토크(회전력)를 제공하는 동력 전달 장치입니다.</strong></p>
+                    </div>
+
+                    <h3>1-2. 핵심 원리</h3>
+                    <div class="subsection">
+                        <h4>입력 → 기어 교합 → 출력</h4>
+                        <ul>
+                            <li><strong>속도 감소:</strong> 작은 기어와 큰 기어를 맞물려 고속 회전을 저속으로 변환</li>
+                            <li><strong>토크 증가:</strong> 속도가 줄어든 만큼 회전력이 증가<br>예: 모터 1,500 RPM → 감속기 통과 → 50 RPM (30:1 감속비, 토크는 30배 증가)</li>
+                        </ul>
+                    </div>
+
+                    <h3>1-3. 로봇에서의 역할</h3>
+                    <p>로봇의 <strong>관절</strong> 역할을 수행합니다. 모터의 고속 회전을 로봇이 필요로 하는 속도와 힘으로 변환하여 로봇 팔이 원하는 움직임을 가능하게 합니다.</p>
+
+                    <h3>1-4. 로봇 밸류체인 단계와 원가 구조</h3>
+                    <p><strong>밸류체인 4단계:</strong> 부품 공급 → 조립 → SW 통합 → 응용(제조·서비스)</p>
+
+                    <h4>원가 구성</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>구성 요소</th>
+                                <th>역할</th>
+                                <th>비중</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>메커니즘(Body)</strong></td>
+                                <td>엔드이펙터, 액추에이터, 감속기 포함</td>
+                                <td><span class="highlight">40~50%</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>제어 시스템(Brain)</strong></td>
+                                <td>AI, 제어 모듈</td>
+                                <td>20~30%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>모빌리티(Legs)</strong></td>
+                                <td>자율 이동, 센서, SW</td>
+                                <td>20~30%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>1-5. 감속기의 중요성</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>지표</th>
+                                <th>비중</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>일반 산업로봇 원가</td>
+                                <td><span class="highlight">30~40%</span></td>
+                            </tr>
+                            <tr>
+                                <td>휴머노이드 로봇 원가</td>
+                                <td><span class="highlight">~60%</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p><strong>중요한 이유:</strong></p>
+                    <ul>
+                        <li>정밀한 동작 제어의 핵심 부품</li>
+                        <li>내구성과 강성이 로봇 성능을 좌우</li>
+                        <li>감속기 가격 = 로봇 전체 제조 비용 경쟁력의 핵심 변수</li>
+                    </ul>
+
+                    <h3>1-6. 2026년 자본의 감속기 집중도</h3>
+                    <ul>
+                        <li><strong>글로벌 산업용 로봇 감속기 시장 (2026):</strong> USD 1,260~1,706 million</li>
+                        <li><strong>성장률 (CAGR 2026-2035):</strong> 4.9~7%</li>
+                        <li><strong>2035년 글로벌 휴머노이드 로봇 시장:</strong> 380억 달러 (골드만삭스 예측)</li>
+                        <li><strong>글로벌 투자은행 평가:</strong> "향후 10년 = 휴머노이드의 10년"</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- Section 2: 수요분석 -->
+            <div class="content">
+                <section>
+                    <h2>Section 2. 고토크 감속기 수요 증가 분석</h2>
+
+                    <h3>2-1. 협동로봇의 22% 연평균 성장</h3>
+                    <ul>
+                        <li><strong>협동로봇 성장률:</strong> <span class="highlight">22% 연평균</span></li>
+                        <li><strong>2026년 예상 출하량:</strong> 12만 4천대</li>
+                        <li><strong>의미:</strong> 고토크 감속기 수요도 함께 22% 이상 증가</li>
+                    </ul>
+
+                    <h3>2-2. 휴머노이드 로봇의 폭발적 성장</h3>
+                    <ul>
+                        <li><strong>성장률:</strong> 2030년까지 CAGR <span class="highlight">39.2%</span></li>
+                        <li><strong>시장규모:</strong> 2030년 152억 달러</li>
+                        <li><strong>2035년 예측:</strong> 380억 달러</li>
+                    </ul>
+
+                    <h3>2-3. 고토크 감속기가 필수인 기술적 이유</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>요구사항</th>
+                                <th>필요 기술</th>
+                                <th>영향</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>소형화</strong></td>
+                                <td>제한된 공간에서 고토크 밀도</td>
+                                <td>관절 슬림화 가능</td>
+                            </tr>
+                            <tr>
+                                <td><strong>안전성</strong></td>
+                                <td>가벼운 구동 구조</td>
+                                <td>사람과 협력 작업 가능</td>
+                            </tr>
+                            <tr>
+                                <td><strong>정밀성</strong></td>
+                                <td>백래시 낮은 감속기</td>
+                                <td>미세한 움직임 제어</td>
+                            </tr>
+                            <tr>
+                                <td><strong>내구성</strong></td>
+                                <td>내충격성 높은 구조</td>
+                                <td>장시간 안정적 작동</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p><strong>핵심:</strong> 고토크 밀도가 높을수록 로봇이 가벼워지고, 움직임이 민첩하고, 에너지 효율이 높아집니다. 휴머노이드 시대에는 고토크 정밀 감속기가 필수입니다.</p>
+                </section>
+            </div>
+
+            <!-- Section 3: 경쟁력평가 -->
+            <div class="content">
+                <section>
+                    <h2>Section 3. 한국 감속기 산업의 경쟁력 평가</h2>
+
+                    <h3>3-1. 글로벌 시장점유율 현황</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>지역</th>
+                                <th>주요 기업</th>
+                                <th>점유율</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>일본</strong></td>
+                                <td>하모닉드라이브시스템즈(HDS)</td>
+                                <td><span class="highlight">50% 안팎</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>중국</strong></td>
+                                <td>뤼디셰보, 라이푸셰보 등</td>
+                                <td>20~25%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>한국</strong></td>
+                                <td>한국의 주요 감속기 기업들</td>
+                                <td><span class="highlight">5% 미만</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>3-2. 기술 경쟁력 평가</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>평가 항목</th>
+                                <th>일본(HDS)</th>
+                                <th>한국 기업</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>동일 모델 토크 수치</td>
+                                <td>-</td>
+                                <td><strong>유사 또는 상회</strong></td>
+                            </tr>
+                            <tr>
+                                <td>정밀도</td>
+                                <td>높음</td>
+                                <td>동등 수준</td>
+                            </tr>
+                            <tr>
+                                <td>다양한 라인업</td>
+                                <td><strong>우수 (수십 개 모델)</strong></td>
+                                <td>부족 (10개 내외)</td>
+                            </tr>
+                            <tr>
+                                <td>글로벌 신뢰도</td>
+                                <td><strong>높음 (오랜 실적)</strong></td>
+                                <td>낮음 (신규)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>3-3. SWOT 분석</h3>
+                    <div class="swot-grid">
+                        <div class="swot-box">
+                            <h5>✅ 강점</h5>
+                            <ul>
+                                <li>기술 격차 거의 해소</li>
+                                <li>공급망 다변화 기회</li>
+                                <li>대형 고객 진입 시작</li>
+                                <li>가격 경쟁력</li>
+                            </ul>
+                        </div>
+                        <div class="swot-box">
+                            <h5>❌ 약점</h5>
+                            <ul>
+                                <li>시장점유율 극소수 (5% 미만)</li>
+                                <li>라인업 부족</li>
+                                <li>글로벌 신뢰도 낮음</li>
+                                <li>고객 기반 협소</li>
+                            </ul>
+                        </div>
+                        <div class="swot-box">
+                            <h5>🎯 기회</h5>
+                            <ul>
+                                <li>휴머노이드 폭발 성장</li>
+                                <li>탈중국 정책</li>
+                                <li>협동로봇 22% 성장</li>
+                                <li>정부 국산화 지원</li>
+                            </ul>
+                        </div>
+                        <div class="swot-box">
+                            <h5>⚠️ 위협</h5>
+                            <ul>
+                                <li>일본의 기술 고도화</li>
+                                <li>중국의 저가 공세</li>
+                                <li>글로벌 기업 자체 개발</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Section 4: 비판적검증 -->
+            <div class="content">
+                <section>
+                    <h2>Section 4. 비판적 검증: "낙관론의 근거는?"</h2>
+
+                    <h3>4-1. Q1: 성능 수준-일본 추격의 근거는?</h3>
+
+                    <div class="annotation">
+                        <strong>[주석]</strong> 성능이 동등하다는 주장의 구체적 근거가 있는가?
+                    </div>
+
+                    <div class="answer">
+                        <strong>[답변]</strong> <strong>명확한 근거: 토크 스펙이 동등</strong>
+                        <p>전자신문, 로봇신문 등 공식 매체 보도:</p>
+                        <div class="quote">
+                            "하모닉 드라이브 시스템스의 동일 모델 기준 토크는 한국 기업들의 수치가 유사하거나 상회하는 것으로 나타났다"
+                        </div>
+                        <p><strong>결론: 성능상 추격 완료. 다만 라인업과 신뢰도에서 일본이 우위.</strong></p>
+                    </div>
+
+                    <h3>4-2. Q2: 뒤쳐진 상태에서 왜 휴머노이드에 낙관적인가?</h3>
+
+                    <div class="annotation">
+                        <strong>[주석]</strong> 시장점유율 5% 미만인데 시장이 커진다고 우리 점유율이 올라간다는 보장이 있나? 일본이 그 시장을 독점하지 않을까?
+                    </div>
+
+                    <div class="answer">
+                        <strong>[답변]</strong> <strong>핵심: 일본도 휴머노이드에서 밀렸습니다</strong>
+
+                        <h4>테슬라 옵티머스 공급망 현실</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>국가</th>
+                                    <th>주요 공급업체</th>
+                                    <th>상황</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>중국</strong></td>
+                                    <td>리더드라이브, 신핀, 베이테 등</td>
+                                    <td>주요 공급 중</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>일본</strong></td>
+                                    <td>하모닉드라이브</td>
+                                    <td><span class="highlight">협상 중 (아직 미공급)</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>한국</strong></td>
+                                    <td>아이로보틱스 협력사</td>
+                                    <td>협력 시작</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p><strong>→ 이것이 한국에게 기회가 되는 이유: 일본도 밀렸으므로, 가격과 성능이 모두 갖춰진 한국이 진입 기회를 갖게 됨</strong></p>
+                    </div>
+
+                    <h3>4-3. 핵심 위험 요소</h3>
+                    <ul>
+                        <li><strong>특정 고객 의존:</strong> 주요 고객 회사의 글로벌 성공이 감속기 수요를 크게 좌우</li>
+                        <li><strong>회귀 위험:</strong> 고객사가 중국 저가 제품으로 전환하거나 일본 HDS로 회귀할 가능성</li>
+                        <li><strong>차별화 부족:</strong> 한국 감속기만의 독자적 강점이 명확하지 않은 상태</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- Section 5: 최종평가 -->
+            <div class="content">
+                <section>
+                    <h2>Section 5. 최종 평가 및 결론</h2>
+
+                    <h3>5-1. 현재 상황 요약</h3>
+                    <ul>
+                        <li><strong>기술:</strong> 한국이 일본 수준의 토크 성능을 확보. 신뢰도와 라인업에서는 일본이 우위</li>
+                        <li><strong>시장:</strong> 휴머노이드 로봇이 폭발적 성장 중. 감속기 수요도 함께 증가</li>
+                        <li><strong>한국의 기회:</strong> 일본은 극저가 경쟁에서 밀렸고, 중국은 품질 낮음. 한국은 중간 위치</li>
+                        <li><strong>산업 동향:</strong> 주요 로봇 제조사들이 한국 감속기 기업을 신뢰도 높은 공급처로 평가하기 시작</li>
+                    </ul>
+
+                    <h3>5-2. 최종 평가</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>평가 항목</th>
+                                <th>등급</th>
+                                <th>해석</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>기술 수준</td>
+                                <td><span class="highlight">A- (일본 대비 95%)</span></td>
+                                <td>성능은 충분히 경쟁력 있음</td>
+                            </tr>
+                            <tr>
+                                <td>가격 경쟁력</td>
+                                <td>B+</td>
+                                <td>중국보다는 비싸지만 품질 고려 시 경쟁 가능</td>
+                            </tr>
+                            <tr>
+                                <td>시장 신뢰도</td>
+                                <td>C</td>
+                                <td>가장 큰 약점, 장시간 극복 필요</td>
+                            </tr>
+                            <tr>
+                                <td>글로벌 네트워크</td>
+                                <td>C-</td>
+                                <td>매우 제한적</td>
+                            </tr>
+                            <tr>
+                                <td>성장 가능성</td>
+                                <td><span class="highlight">A</span></td>
+                                <td>휴머노이드 성장으로 매우 긍정적</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>5-3. 결론</h3>
+                    <div class="subsection">
+                        <p><strong>2026년 한국 감속기 산업 평가:</strong></p>
+                        <div class="quote">
+                            기술로는 일본을 따라잡았으나, 신뢰도와 시장 점유율에서 여전히 크게 뒤처진 상태. 그러나 휴머노이드 로봇 폭발 성장과 '탈중국' 정책이라는 절호의 기회를 맞이하고 있는 전환점.
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORY 2: 기업분석 ==================== -->
+        <div class="category-section">
+
+            <!-- 기업분석 1: 에스피지 -->
+            <div class="content active">
+                <section>
+                    <h2>에스피지 (SPG) - 종합 기업 분석</h2>
+
+                    <h3>주요 감속기 기술</h3>
+                    <p><strong>보유 기술:</strong> 유성(Planetary), SH(하모닉), SR(사이클로이드) 3가지 감속기 모두 자체 개발·양산</p>
+
+                    <div class="subsection">
+                        <h4>기술의 의의</h4>
+                        <ul>
+                            <li><strong>세계 유일:</strong> 3가지 정밀감속기를 모두 독자 생산 가능한 유일의 전문 기업</li>
+                            <li><strong>뉴가트(독일):</strong> 유성감속기 분야 글로벌 강자</li>
+                            <li><strong>하모닉드라이브(일본):</strong> SH감속기 분야 글로벌 리더</li>
+                            <li><strong>나브테스코(일본):</strong> SR감속기 분야 글로벌 리더</li>
+                            <li><strong>에스피지:</strong> 이 셋을 모두 자체 생산하며 로봇 전체 카테고리 관절 커버 가능 (풀스택 구조)</li>
+                        </ul>
+                    </div>
+
+                    <h3>라인업 및 적용 분야</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>감속기 타입</th>
+                                <th>특징</th>
+                                <th>적용 분야</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>유성(Planetary)</strong></td>
+                                <td>컴팩트, 높은 토크 처리 능력</td>
+                                <td>소형 로봇, 협동로봇</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SH(하모닉형)</strong></td>
+                                <td>경량, 높은 정밀도, 역구동성 낮음</td>
+                                <td>휴머노이드, 협동로봇</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SR(사이클로이드/RV)</strong></td>
+                                <td>고강성, 내구성, 충격 저항성</td>
+                                <td>산업용 다관절 로봇</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>기술적 경쟁력</h3>
+                    <div class="grid-2">
+                        <div class="box">
+                            <h4>✅ 장점</h4>
+                            <ul>
+                                <li>토크 스펙: 일본 HDS와 동등 또는 상회</li>
+                                <li>3가지 감속기 모두 자체 생산</li>
+                                <li>빠른 커스터마이징 대응</li>
+                                <li>양산 능력과 원가 경쟁력</li>
+                            </ul>
+                        </div>
+                        <div class="box">
+                            <h4>⚠️ 약점</h4>
+                            <ul>
+                                <li>라인업 상대적으로 제한적</li>
+                                <li>글로벌 신뢰도 낮음</li>
+                                <li>다양한 사양 개발 경험 부족</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <p><strong>경쟁력 평가:</strong> A- (기술: A, 신뢰도: C, 라인업: B)</p>
+                    </div>
+
+                    <h3>재무 실적 (2020-2025)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>지표</th>
+                                <th>2020</th>
+                                <th>2021</th>
+                                <th>2022</th>
+                                <th>2023</th>
+                                <th>2024</th>
+                                <th>2025 예상</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>매출액</strong></td>
+                                <td>3,548억원</td>
+                                <td>4,163억원</td>
+                                <td>4,405억원</td>
+                                <td>3,938억원</td>
+                                <td>3,885억원</td>
+                                <td>4,185억원</td>
+                            </tr>
+                            <tr>
+                                <td><strong>성장률</strong></td>
+                                <td>-</td>
+                                <td>+17.3%</td>
+                                <td>+5.8%</td>
+                                <td>-10.6%</td>
+                                <td>-1.3%</td>
+                                <td>+7.7%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>정밀감속기</strong></td>
+                                <td>-</td>
+                                <td>상용화</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>130억원+</td>
+                                <td><span class="highlight">300억원 목표</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>주요 수주 및 협력사</h3>
+                    <div class="info-box">
+                        <h4>대형 고객 확보</h4>
+                        <ul>
+                            <li><strong>레인보우로보틱스:</strong> 전 모델 100% 공급 중 (양팔로봇 RB-Y1에 22개 감속기 탑재)</li>
+                            <li><strong>삼성전자:</strong> 봇핏(보행 보조로봇)에 액추에이터 단독 공급</li>
+                            <li><strong>현대차:</strong> 휴머노이드 관련 감속기 공급 진행</li>
+                            <li><strong>글로벌 고객 비중:</strong> 70% 후반대</li>
+                        </ul>
+                    </div>
+
+                    <h3>시장 점유율</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>지역</th>
+                                <th>주요 기업</th>
+                                <th>점유율</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>일본</td>
+                                <td>하모닉드라이브</td>
+                                <td>50% 안팎</td>
+                            </tr>
+                            <tr>
+                                <td>중국</td>
+                                <td>뤼디셰보 등</td>
+                                <td>20~25%</td>
+                            </tr>
+                            <tr>
+                                <td>한국 (에스피지)</td>
+                                <td>-</td>
+                                <td><span class="highlight">5% 미만</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>2026년 전략 및 로드맵</h3>
+                    <div class="grid-2">
+                        <div class="box">
+                            <h4>단기 목표 (2026)</h4>
+                            <ul>
+                                <li>정밀감속기 300억원 달성</li>
+                                <li>액추에이터 확대 생산</li>
+                                <li>대형 OEM 공동개발</li>
+                            </ul>
+                        </div>
+                        <div class="box">
+                            <h4>양산 단계</h4>
+                            <ul>
+                                <li>현재: 1차 양산 (수량 제한)</li>
+                                <li>2026~2027: 본격 대량생산</li>
+                                <li>국내 2개 공장 + 해외 전개</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>투자 판단</h3>
+                    <p><span class="rating">추천등급: BUY</span> <strong>조건부 강력 매수</strong></p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>평가 항목</th>
+                                <th>등급</th>
+                                <th>근거</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>기술력</td>
+                                <td>A-</td>
+                                <td>토크 성능 일본 동등, 3가지 감속기 자체 생산</td>
+                            </tr>
+                            <tr>
+                                <td>시장 성장성</td>
+                                <td>A</td>
+                                <td>휴머노이드 CAGR 39.2%, 협동로봇 22% 성장</td>
+                            </tr>
+                            <tr>
+                                <td>사업화 진행</td>
+                                <td>A</td>
+                                <td>레인보우 100% 공급, 삼성·현대 협력</td>
+                            </tr>
+                            <tr>
+                                <td>실적 성장</td>
+                                <td>A</td>
+                                <td>2026년 영업이익 46.4% 증가 예상</td>
+                            </tr>
+                            <tr>
+                                <td>신뢰도</td>
+                                <td>C+</td>
+                                <td>역사 짧음, 하지만 빠른 대응력으로 보완</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="info-box">
+                        <h4>투자 포인트</h4>
+                        <ul>
+                            <li><strong>단기 (2026-2027):</strong> 정밀감속기 300억원 → 500억원+</li>
+                            <li><strong>중기 (2027-2029):</strong> 시장점유율 5% → 10~15% 확대 가능</li>
+                            <li><strong>촉매:</strong> 레인보우로보틱스 글로벌 성공, 삼성/현대 휴머노이드 양산</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 기업분석 2: 에스비비테크 -->
+            <div class="content">
+                <section>
+                    <h2>에스비비테크 (SBB TECH) - 종합 기업 분석</h2>
+
+                    <h3>주요 감속기 기술</h3>
+                    <p><strong>보유 기술:</strong> 하모닉(SH형) + RV형 감속기</p>
+
+                    <div class="subsection">
+                        <h4>기술의 의의</h4>
+                        <ul>
+                            <li><strong>2013년 국산화 성공:</strong> 국내 최초 하모닉 감속기 국산화</li>
+                            <li><strong>독자 치형 설계:</strong> 일본 HDS와 다른 독자적 치형 설계 기술 보유</li>
+                            <li><strong>제조 역량:</strong> 베어링 기술 + 정밀 가공 기술</li>
+                        </ul>
+                    </div>
+
+                    <h3>라인업</h3>
+                    <div class="info-box">
+                        <h4>ROBO Drive 라인</h4>
+                        <ul>
+                            <li>ROBO Drive (하모닉 Type): 협동로봇, 휴머노이드 관절용</li>
+                            <li>ROBO Drive (RV Type): 산업용 다관절 로봇용</li>
+                            <li>특수 용도 제품 개발 중</li>
+                        </ul>
+                    </div>
+
+                    <h3>기술적 경쟁력</h3>
+                    <div class="grid-2">
+                        <div class="box">
+                            <h4>✅ 장점</h4>
+                            <ul>
+                                <li>토크 성능: HDS와 동등</li>
+                                <li>독자 치형 설계</li>
+                                <li>베어링 기술 연계</li>
+                                <li>커스터마이징 대응력</li>
+                            </ul>
+                        </div>
+                        <div class="box">
+                            <h4>⚠️ 약점</h4>
+                            <ul>
+                                <li>라인업 제한적</li>
+                                <li>글로벌 신뢰도 매우 낮음</li>
+                                <li>수익성 부진 지속</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>재무 실적 (2023-2025)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>지표</th>
+                                <th>2023</th>
+                                <th>2024</th>
+                                <th>2025</th>
+                                <th>2025 상반기</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>매출액</strong></td>
+                                <td>~50억원</td>
+                                <td>54.7억원</td>
+                                <td>72.0억원</td>
+                                <td>36억원</td>
+                            </tr>
+                            <tr>
+                                <td><strong>영업이익</strong></td>
+                                <td>손실</td>
+                                <td>△68.9억원</td>
+                                <td>△68.6억원</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><strong>주요 사항</strong></td>
+                                <td>사업전환</td>
+                                <td>R&D 투자 확대</td>
+                                <td>매출 31.7% ↑</td>
+                                <td>전년동기 120% ↑</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="info-box">
+                        <h4>손실 원인 분석</h4>
+                        <ul>
+                            <li>높은 R&D 비용 (신제품 개발)</li>
+                            <li>고정 제조비 (소량 생산)</li>
+                            <li>추세: 손실액 축소 중 (매출 증가)</li>
+                            <li>예상: 2026년 손익분기점 진입 가능성</li>
+                        </ul>
+                    </div>
+
+                    <h3>주요 협력사</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>구분</th>
+                                <th>협력사</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>국내</strong></td>
+                                <td>현대차 (협력 가능성 높음), 삼성전자 (협력 검토)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>글로벌</strong></td>
+                                <td>TSMC (2024년부터 본격 협력), 유럽 로봇 제조사</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>시장 점유율</h3>
+                    <div class="info-box">
+                        <p><strong>글로벌 정밀감속기 시장:</strong> 일본 50%, 중국 20~25%, <span class="highlight">한국(SBB) 2~3% 추정</span></p>
+                    </div>
+
+                    <h3>2026-2027년 로드맵</h3>
+                    <div class="grid-2">
+                        <div class="box">
+                            <h4>천안 공장 전략</h4>
+                            <ul>
+                                <li>2024년부터 운영 개시</li>
+                                <li>생산량 대폭 확대</li>
+                                <li>원가 경쟁력 급격히 개선</li>
+                            </ul>
+                        </div>
+                        <div class="box">
+                            <h4>2026-2027년 목표</h4>
+                            <ul>
+                                <li>매출 100억원 이상</li>
+                                <li>손익분기점 진입</li>
+                                <li>글로벌 고객 추가 확보</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>투자 판단</h3>
+                    <p><span class="rating">추천등급: BUY</span> <strong>고위험·고수익</strong></p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>평가 항목</th>
+                                <th>등급</th>
+                                <th>근거</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>기술력</td>
+                                <td>A</td>
+                                <td>독자 치형 설계, HDS 동등 성능</td>
+                            </tr>
+                            <tr>
+                                <td>시장 성장성</td>
+                                <td>A</td>
+                                <td>휴머노이드·협동로봇 성장</td>
+                            </tr>
+                            <tr>
+                                <td>사업화 진행</td>
+                                <td>C+</td>
+                                <td>TSMC 협력 시작, 고객 아직 제한적</td>
+                            </tr>
+                            <tr>
+                                <td>실적 성장</td>
+                                <td>B</td>
+                                <td>매출 성장 시작, 손실 축소 중</td>
+                            </tr>
+                            <tr>
+                                <td>신뢰도</td>
+                                <td>D+</td>
+                                <td>매우 낮음, 검증 필요</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="info-box">
+                        <h4>투자 성공 조건</h4>
+                        <ul>
+                            <li>TSMC 또는 글로벌 OEM의 대량 주문</li>
+                            <li>천안 공장의 효율적 운영</li>
+                            <li>2026년 내 손익분기점 도달</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 기업분석 3: 해성에어로보틱스 -->
+            <div class="content">
+                <section>
+                    <h2>해성에어로보틱스 (HST) - 종합 기업 분석</h2>
+
+                    <h3>주요 감속기 기술</h3>
+                    <p><strong>보유 기술:</strong> RV 감속기(사이클로이드 드라이브) 전문</p>
+
+                    <div class="subsection">
+                        <h4>기술의 의의</h4>
+                        <ul>
+                            <li><strong>30여 종 라인업:</strong> RV 감속기에 특화된 가장 다양한 제품군</li>
+                            <li><strong>독자 치형 설계:</strong> 오토캐드, 솔리드웍스로 독자 설계</li>
+                            <li><strong>고토크 전문:</strong> 고토크가 필요한 산업용·협동로봇에 최적</li>
+                        </ul>
+                    </div>
+
+                    <h3>라인업</h3>
+                    <p><strong>RV 감속기:</strong> 30여 종의 다양한 감속비 제품 (일본 나브테스코 대비 풍부한 라인업)</p>
+                    <ul>
+                        <li>산업용 다관절 로봇 (1~3축)</li>
+                        <li>협동로봇</li>
+                        <li>4족 보행 로봇</li>
+                        <li>특수 로봇</li>
+                    </ul>
+
+                    <h3>기술적 경쟁력</h3>
+                    <div class="grid-2">
+                        <div class="box">
+                            <h4>✅ 장점</h4>
+                            <ul>
+                                <li>라인업 다양성 (30여 종)</li>
+                                <li>독자 치형 설계</li>
+                                <li>가격 경쟁력</li>
+                            </ul>
+                        </div>
+                        <div class="box">
+                            <h4>❌ 약점</h4>
+                            <ul>
+                                <li>특허 출원 미약</li>
+                                <li>글로벌 신뢰도 매우 낮음</li>
+                                <li>기술 안정도 검증 미완료</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>재무 실적 (2022-2025)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>지표</th>
+                                <th>2022</th>
+                                <th>2023</th>
+                                <th>2024</th>
+                                <th>2025 1Q</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>매출액</strong></td>
+                                <td>~135억원</td>
+                                <td>~130억원</td>
+                                <td>149.4억원</td>
+                                <td>33억원</td>
+                            </tr>
+                            <tr>
+                                <td><strong>영업이익</strong></td>
+                                <td>미공시</td>
+                                <td>적자 추정</td>
+                                <td>△15.0억원</td>
+                                <td>△3억원</td>
+                            </tr>
+                            <tr>
+                                <td><strong>성장률</strong></td>
+                                <td>-</td>
+                                <td>-3.7%</td>
+                                <td>+9.17%</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="info-box">
+                        <h4>실적 분석</h4>
+                        <ul>
+                            <li>매출: 2022~2023 정체 → 2024 증가 → 2025 증가 추세</li>
+                            <li>손실: 감속기 사업 아직 수익화 전단계 + R&D 비용</li>
+                            <li>규모: 연 15억원 내외 적자 (소규모)</li>
+                        </ul>
+                    </div>
+
+                    <h3>주요 협력사</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>협력 형태</th>
+                                <th>협력사</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>핵심 협력</strong></td>
+                                <td>아이로보틱스 (감속기 설계 총괄)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>프로젝트</strong></td>
+                                <td>테슬라 옵티머스향 감속기 공동 개발 (연 100만개 목표)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>시장 점유율</h3>
+                    <div class="info-box">
+                        <p><strong>글로벌 RV 감속기 시장:</strong> 나브테스코 60~70%, 중국 15~20%, <span class="highlight">한국(HST) 1% 미만</span></p>
+                    </div>
+
+                    <h3>2025-2027년 로드맵</h3>
+                    <div class="info-box">
+                        <h4>초기 목표 (2025년 발표)</h4>
+                        <ul>
+                            <li>감속기 10만 대 양산</li>
+                            <li><strong>현황:</strong> 미달성 가능성 높음 (1Q 매출로 추정 시 연간 2~3만 대 수준)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>테슬라 옵티머스 프로젝트</h4>
+                        <ul>
+                            <li>아이로보틱스와 공동으로 RV 감속기 개발</li>
+                            <li>연 100만 개 공급 목표 (매우 높은 목표)</li>
+                            <li>현재: 초기 단계, 본격 양산은 2026년 이후 예상</li>
+                        </ul>
+                    </div>
+
+                    <h3>투자 판단</h3>
+                    <p><span class="rating">추천등급: HOLD</span> <strong>신중한 접근 권장</strong></p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>평가 항목</th>
+                                <th>등급</th>
+                                <th>근거</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>기술력</td>
+                                <td>B</td>
+                                <td>RV 감속기 라인업 풍부, 특허 미약</td>
+                            </tr>
+                            <tr>
+                                <td>시장 성장성</td>
+                                <td>A</td>
+                                <td>고토크 감속기 수요 증가</td>
+                            </tr>
+                            <tr>
+                                <td>사업화 진행</td>
+                                <td>C</td>
+                                <td>아이로보틱스 협력 진행, 아직 수익화 전</td>
+                            </tr>
+                            <tr>
+                                <td>실적 성장</td>
+                                <td>C</td>
+                                <td>매출 정체, 손실 축소 안 되고 있음</td>
+                            </tr>
+                            <tr>
+                                <td>신뢰도</td>
+                                <td>D</td>
+                                <td>기술 검증 미완료, 기업 신뢰도 낮음</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="info-box">
+                        <h4>⚠️ 가장 높은 위험</h4>
+                        <ul>
+                            <li>자금 흐름 약함 (적자 기업)</li>
+                            <li>테슬라 의존도 과도 (아이로보틱스 통한 간접)</li>
+                            <li>사업성 검증 부족</li>
+                            <li>경영 위기 가능성 (적자 장기 지속)</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 기업분석 4: 종합비교평가 -->
+            <div class="content">
+                <section>
+                    <h2>세 기업 종합비교평가</h2>
+
+                    <h3>기술력 비교</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>항목</th>
+                                <th>에스피지</th>
+                                <th>에스비비테크</th>
+                                <th>해성에어로</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>감속기 종류</strong></td>
+                                <td>3가지 모두</td>
+                                <td>2가지 (SH+RV)</td>
+                                <td>1가지 (RV만)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>성능 수준</strong></td>
+                                <td>A-</td>
+                                <td>A-</td>
+                                <td>B+</td>
+                            </tr>
+                            <tr>
+                                <td><strong>특허 보유</strong></td>
+                                <td>중간</td>
+                                <td>적음</td>
+                                <td>매우 적음</td>
+                            </tr>
+                            <tr>
+                                <td><strong>글로벌 신뢰도</strong></td>
+                                <td>C+</td>
+                                <td>D+</td>
+                                <td>D</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>사업화 진행도 비교</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>항목</th>
+                                <th>에스피지</th>
+                                <th>에스비비테크</th>
+                                <th>해성에어로</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>상용화 시기</strong></td>
+                                <td>2021년</td>
+                                <td>2013년</td>
+                                <td>1990년대</td>
+                            </tr>
+                            <tr>
+                                <td><strong>대형 고객</strong></td>
+                                <td>✅ 레인보우, 삼성, 현대</td>
+                                <td>⚠️ TSMC 초기</td>
+                                <td>⚠️ 아이로보틱스만</td>
+                            </tr>
+                            <tr>
+                                <td><strong>글로벌 공급</strong></td>
+                                <td>✅ 70% 비중</td>
+                                <td>❌ 미흡</td>
+                                <td>❌ 미흡</td>
+                            </tr>
+                            <tr>
+                                <td><strong>수익성 전환</strong></td>
+                                <td>✅ 2026년</td>
+                                <td>❌ 2025년도 손실</td>
+                                <td>❌ 2025년도 손실</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>재무 실적 비교 (2024년 기준)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>항목</th>
+                                <th>에스피지</th>
+                                <th>에스비비테크</th>
+                                <th>해성에어로</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>매출액</strong></td>
+                                <td>388.5억원</td>
+                                <td>54.7억원</td>
+                                <td>149.4억원</td>
+                            </tr>
+                            <tr>
+                                <td><strong>영업이익</strong></td>
+                                <td>추정 흑자</td>
+                                <td>△68.9억원</td>
+                                <td>△15.0억원</td>
+                            </tr>
+                            <tr>
+                                <td><strong>정밀감속기 매출</strong></td>
+                                <td>130억원+</td>
+                                <td>극소수</td>
+                                <td>20~30억원 추정</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>향후 성장 잠재력 (2026-2027)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>항목</th>
+                                <th>에스피지</th>
+                                <th>에스비비테크</th>
+                                <th>해성에어로</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>2026년 전망</strong></td>
+                                <td>450~500억원</td>
+                                <td>100~150억원</td>
+                                <td>180~200억원</td>
+                            </tr>
+                            <tr>
+                                <td><strong>수익성 전환</strong></td>
+                                <td>✅ 2026년</td>
+                                <td>⚠️ 2027년 이후</td>
+                                <td>❌ 불명확</td>
+                            </tr>
+                            <tr>
+                                <td><strong>시장점유율 확대</strong></td>
+                                <td>5% → 10~15%</td>
+                                <td>2% → 5~7%</td>
+                                <td>1% → 3~5%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>핵심 프로젝트</strong></td>
+                                <td>레인보우 성장</td>
+                                <td>TSMC 협력</td>
+                                <td>테슬라(간접)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>투자 우선순위</h3>
+                    <div class="grid-2">
+                        <div class="box">
+                            <h4>🥇 순위 1: 에스피지</h4>
+                            <ul>
+                                <li>가장 확실한 성장</li>
+                                <li>대형 고객 확보</li>
+                                <li>2026년 이익 전환 확정</li>
+                            </ul>
+                        </div>
+                        <div class="box">
+                            <h4>🥈 순위 2: 에스비비테크</h4>
+                            <ul>
+                                <li>기술력 우수</li>
+                                <li>천안 공장 본격화</li>
+                                <li>2027년 이후 폭발적 성장 가능</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h4>🥉 순위 3: 해성에어로보틱스</h4>
+                        <ul>
+                            <li>초대형 기회 (테슬라)</li>
+                            <li>가장 높은 위험</li>
+                            <li>자금·사업성 미검증</li>
+                        </ul>
+                    </div>
+
+                    <h3>투자 전략별 추천</h3>
+                    <div class="info-box">
+                        <h4>보수적 투자자</h4>
+                        <p><strong>1순위: 에스피지</strong> (확실한 성장, 기업 신뢰도, 수익화 확정)</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>공격적 투자자</h4>
+                        <ul>
+                            <li><strong>1순위: 에스피지</strong> (성장 + 안정성)</li>
+                            <li><strong>2순위: 에스비비테크</strong> (고배당 잠재력, 천안 공장)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>고위험 추구자</h4>
+                        <ul>
+                            <li><strong>1순위: 해성에어로보틱스</strong> (테슬라 베팅)</li>
+                            <li><strong>전제:</strong> 충분한 여유자금으로 롱텀 투자</li>
+                        </ul>
+                    </div>
+
+                    <h3>최종 평가</h3>
+                    <div class="subsection">
+                        <p><strong>2026년 한국 감속기 기업분석 결론:</strong></p>
+                        <p>감속기 산업은 이제 성장 초기 단계에 진입했습니다. 한국 기업들이 일본 기술을 따라잡고 중국 저가에 대응할 수 있는 "황금 기회의 창"이 2026~2027년입니다. <strong>어떤 기업을 선택할지보다, "언제"와 "얼마나" 진입할지가 중요한 시점입니다.</strong></p>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>보고서명:</strong> 로봇 감속기 산업·기업 통합 분석 보고서</p>
+            <p><strong>작성일:</strong> 2026년 6월 6일 | <strong>분석 범위:</strong> 산업 분석 및 기업별 종합 평가</p>
+            <p><strong>구성:</strong> 산업 분석 (5개 섹션) + 기업분석 (SPG, SBB, HST, 종합비교평가)</p>
+        </footer>
+
+    </div>
+
+    <script>
+        let currentCategory = 0;
+
+        function switchCategory(index) {
+            // Hide all category sections
+            const sections = document.querySelectorAll('.category-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active from all category buttons
+            const categoryButtons = document.querySelectorAll('.category-tab');
+            categoryButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Hide all sub-tabs containers
+            const industryTabs = document.querySelector('.industry-tabs');
+            const companyTabs = document.querySelector('.company-tabs');
+
+            industryTabs.classList.remove('active');
+            companyTabs.classList.remove('active');
+
+            // Show selected category
+            sections[index].classList.add('active');
+            categoryButtons[index].classList.add('active');
+
+            currentCategory = index;
+
+            // Reset sub-tabs and show appropriate tabs
+            if (index === 0) {
+                industryTabs.classList.add('active');
+                switchIndustryTab(0);
+            } else {
+                companyTabs.classList.add('active');
+                switchCompanyTab(0);
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        function switchIndustryTab(index) {
+            switchSubTab(index, 'industry');
+        }
+
+        function switchCompanyTab(index) {
+            switchSubTab(index, 'company');
+        }
+
+        function switchSubTab(index, type) {
+            const categorySection = document.querySelectorAll('.category-section')[currentCategory];
+            const contents = categorySection.querySelectorAll('.content');
+
+            let subTabs;
+            if (type === 'industry') {
+                subTabs = document.querySelector('.industry-tabs').querySelectorAll('.sub-tab');
+            } else {
+                subTabs = document.querySelector('.company-tabs').querySelectorAll('.sub-tab');
+            }
+
+            // Hide all content
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active from all sub-tabs
+            subTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected content
+            if (contents[index]) {
+                contents[index].classList.add('active');
+            }
+
+            // Add active to clicked tab
+            if (subTabs[index]) {
+                subTabs[index].classList.add('active');
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstCategoryTab = document.querySelector('.category-tab');
+            if (firstCategoryTab) {
+                firstCategoryTab.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
